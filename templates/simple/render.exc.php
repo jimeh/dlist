@@ -3,8 +3,8 @@
 //
 //  render
 //
-//  Created by Jim Myhrberg on 21-Mar-2006.
-//  Copyright (c)  zynode.info. All rights reserved.
+//  Created on 21-Mar-2006.
+//  Copyright © Jim Myhrberg. All rights reserved.
 //
 
 //_HEAD;

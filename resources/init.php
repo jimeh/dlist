@@ -1,5 +1,11 @@
 <?php
 
+/*
+	
+	Copyright © 2006 Jim Myhrberg.
+	zynode@gmail.com
+
+*/
 
 // process requested path
 if ( stristr($_SERVER['REQUEST_URI'], '?') !== false ) {

@@ -1,5 +1,12 @@
 <?php
 
+/*
+	
+	dList v0.7 beta
+	Copyright © 2006 Jim Myhrberg.
+	zynode@gmail.com
+
+*/
 
 require_once('config.php');
 require_once('resources/init.php');

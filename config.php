@@ -4,7 +4,7 @@ $config = array(
 	
 // Main settings
 	
-	'url'         => '/dlist2/',
+	'url'         => '/dlist/',
 	'index_files' => array('index', 'default', 'main'),
 	'debug'       => false,
 	
