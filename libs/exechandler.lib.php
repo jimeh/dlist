@@ -106,13 +106,12 @@ class execHandler {
 */
 	
 	function cache ($force=false) {
-		if ( !($cache_ok = $this->check_cache()) ) {
+		if ( $force || $this->debug || !$this->check_cache() ) {
 			echo "reloading\n";
 			$this->loadFile($this->files_to_load);
 			$this->compile();
 			$this->save_cache();
 		}
-		print_r($cache_ok);
 	}
 	
 	function addPath ($input) {

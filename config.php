@@ -6,7 +6,7 @@ $config = array(
 	
 	'url'         => '/dlist/',
 	'index_files' => array('index', 'default', 'main'),
-	'debug'       => false,
+	'debug'       => true,
 	
 	
 // Display settings
