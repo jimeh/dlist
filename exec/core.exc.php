@@ -3,8 +3,8 @@
 //
 //  core
 //
-//  Created by Jim Myhrberg on 21-Mar-2006.
-//  Copyright (c) zynode.info. All rights reserved.
+//  Created on 21-Mar-2006.
+//  Copyright © Jim Myhrberg. All rights reserved.
 //
 
 //_HEAD;
@@ -34,7 +34,7 @@ $do_render = true;
 
 //==========================
 //>STAGE> main
-//==========================d
+//==========================
 
 //>Section> init_dList
 if ( $do_readdir ) {
