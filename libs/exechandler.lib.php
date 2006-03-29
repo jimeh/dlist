@@ -4,8 +4,9 @@ class execHandler {
 	
 /*
 	
-	execHandler v0.7 beta
-	Copyright © 2006 Jim Myhrberg.
+	Class: execHandler v0.7 beta
+	
+	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
 
 */
@@ -140,11 +141,20 @@ class execHandler {
 		$this->compiled_code = '';
 		$this->sort_stage_list();
 		foreach( $this->stages as $stage => $stage_priority ) {
-			if( $this->debug ) $this->compiled_code .= "\n\n//==========================\n// Stage: ".$stage."\n//==========================\n";
+			if( $this->debug ) {
+				$this->compiled_code
+					.= "\n\n//==========================\n// Stage: ".$stage.":".$stage_priority."\n//==========================\n";
+				$new_stage = true;
+			}
 			foreach( $this->execution_order[$stage] as $key => $code ) {
 				if( $this->debug ) {
-					$this->compiled_code .= "\n// Code Piece: ".$code."\n";
+					$pr = explode('|', $key, 2);
+					$pr = $pr[0];
+					$this->compiled_code
+							.= ( $new_stage ) ? "\n// Code Piece: ".$code.":".$pr."\n" : "\n\n// Code Piece: ".$code.":".$pr."\n" ;
+					//$this->compiled_code .= "\n// Code Piece: ".$code."\n";
 					$this->compiled_code .= $this->clean_up_code($this->code[$stage][$code]);
+					$new_stage = false;
 				} else {
 					$this->compiled_code .= $this->code[$stage][$code];
 				}

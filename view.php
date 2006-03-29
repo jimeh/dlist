@@ -3,7 +3,8 @@
 /*
 	
 	dList v0.7 beta
-	Copyright © 2006 Jim Myhrberg.
+	
+	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
 
 */
@@ -32,6 +33,8 @@ $exec->addPath(
 );
 $exec->cache();
 include($exec->include_file);
+
+print_r($exec->execution_order);
 
 
 $time->end();

@@ -1,10 +1,10 @@
 <?php die();
 
 //
-//  render
+//  Exec: render
 //
-//  Created on 21-Mar-2006.
-//  Copyright © Jim Myhrberg. All rights reserved.
+//  Copyright © 2006 Jim Myhrberg. All rights reserved.
+//  zynode@gmail.com
 //
 
 //_HEAD;
@@ -18,7 +18,8 @@ Author: Jim Myhrberg
 //==========================
 //>STAGE> init
 //==========================
-echo "hello";
+
+
 
 //_END;
 ?>

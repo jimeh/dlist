@@ -4,8 +4,9 @@ class dirlist {
 
 /*
 
-	dirlist v2.0 beta
-	Copyright © 2006 Jim Myhrberg.
+	Class: dirlist v2.0 beta
+	
+	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
 
 */

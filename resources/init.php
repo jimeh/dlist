@@ -2,7 +2,7 @@
 
 /*
 	
-	Copyright © 2006 Jim Myhrberg.
+	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
 
 */
@@ -37,7 +37,7 @@ if ( !empty($redirect) ) {
 		$scheme = parse_url($_SERVER['SCRIPT_URI']);
 		$scheme = $scheme['scheme'];
 	} else $scheme = $config['default_scheme'];
-	if($query_string != '') $query_string = '?'.$query_string;
+	if( !empty($query_string) ) $query_string = '?'.$query_string;
 	header("Location: ".$scheme.'://'.$_SERVER['HTTP_HOST'].$dir_url.$redirect.$query_string);
 	exit;
 }

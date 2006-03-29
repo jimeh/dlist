@@ -8,6 +8,10 @@ $config = array(
 	'index_files' => array('index', 'default', 'main'),
 	'debug'       => true,
 	
+
+// File system settings
+
+	'show_hidden' => true,
 	
 // Display settings
 	
