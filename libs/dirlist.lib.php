@@ -18,7 +18,7 @@ class dirlist {
 	
 	// Sorting
 	var $sort_items = true;
-	var $sort_reverse = false;
+	var $reverse = false;
 
 	// Smart date formatting
 	var $smartdate = '{date}, {time}';
@@ -73,7 +73,7 @@ class dirlist {
 				}
 			}
 			if ( $this->sort_items ) {
-				( $this->sort_reverse ) ? krsort($this->list) : ksort($this->list) ;
+				( $this->reverse ) ? krsort($this->list) : ksort($this->list) ;
 			}
 			return true;
 		}else{ $this->error = true; return false; }

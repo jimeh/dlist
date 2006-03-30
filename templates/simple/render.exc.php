@@ -20,6 +20,9 @@ Author: Jim Myhrberg
 //==========================
 
 
+//>After> core.define_constants
+$config->parse(TPL_PATH.'settings.php');
+
 
 //_END;
 ?>

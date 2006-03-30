@@ -122,6 +122,7 @@ class execHandler {
 		} elseif( is_string($input) ) {
 			$result = glob($input);
 		}
+		$result = array_filter($result);
 		if ( is_array($result) ) $result = array_unique($result);
 		$this->files_to_load = array_merge($this->files_to_load, $result);
 	}

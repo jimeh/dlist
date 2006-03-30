@@ -19,18 +19,11 @@ Author: Jim Myhrberg
 //>STAGE> init
 //==========================
 
-
-//>Section> define_constants
-define('DIR_URL', $dir_url);
-define('DIR_PATH', $dir_path);
-define('QUERY_STRING', $query_string);
-
-define('DLIST_URL', $config['url']);
-define('TEMPLATE', $config['template']);
-define('TPL_URL', DLIST_URL.'templates/'.TEMPLATE.'/');
+//>Section> start_timer:10
+$timer = new speedometer();
 
 
-//>Section> port_correction
+//>Section> port_correction:20
 if ( stristr($_SERVER['HTTP_HOST'], ':') !== false ) {
 	$http_host = explode(':', $_SERVER['HTTP_HOST'], 2);
 	$_SERVER['SERVER_PORT'] = $http_host[1];
@@ -40,9 +33,22 @@ preg_match("/(.*)Port [0-9]{2,8}(.*)/", $_SERVER['SERVER_SIGNATURE'], $serverinf
 $_SERVER['SERVER_SIGNATURE'] = $serverinfo[1].'Port '.$_SERVER['SERVER_PORT'].$serverinfo[2];
 
 
-//>Section> set_vars
+//>Section> define_constants:30
+define('DIR_URL', $dir_url);
+define('DIR_PATH', $dir_path);
+define('QUERY_STRING', $query_string);
+
+define('DLIST_URL', $config->url);
+define('TEMPLATE', $config->template);
+define('TPL_PATH', 'templates/'.TEMPLATE.'/');
+define('TPL_URL', DLIST_URL.TPL_PATH);
+
+
+//>Section> dynamic_vars
 $do_readdir = true;
 $do_render = true;
+$do_sort_items = true;
+$do_sort_reverse = false;
 
 
 //==========================
@@ -50,21 +56,32 @@ $do_render = true;
 //==========================
 
 
-//>Section> init_dList
+//>Section> readdir
 if ( $do_readdir ) {
+	//>Section> readdir.start
 	$dlist = new dirlist();
-	if ($config['show_hidden']) $dlist->show_hidden = true;
+	//>Section> readdir.options
+	if ( empty($do_sort_items) ) {
+		$dlist->sort_items = false;
+	} elseif (!empty($do_sort_reverse)) $dlist->reverse = true;
+	if ($config->show_hidden) $dlist->show_hidden = true;
+	//>Section> readdir.read
 	$dlist->read(DIR_PATH);
+	//>Section> readdir.end
 }
-
 
 //==========================
 //>STAGE> render
 //==========================
 
 
+//>Section> end_timer:10
+$timer->end();
+
+
 //>Section> echo
 print_r($dlist->list);
+print_r($config);
 
 
 //_END;

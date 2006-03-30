@@ -11,7 +11,7 @@ $config = array(
 
 // File system settings
 
-	'show_hidden' => true,
+	'show_hidden' => false,
 	
 // Display settings
 	
