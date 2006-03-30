@@ -251,7 +251,11 @@ class execHandler {
 				if ( preg_match("/(.*)".$this->priority_delim."(.*)/", $section, $priority) ) {
 					$section = $priority[1];
 					$priority = $priority[2];
-				} else { $priority = $this->default_priority; }
+				} elseif ( !empty($settings['priority']) ) {
+					$priority = $settings['priority'];
+				}else {
+					$priority = $this->default_priority;
+				}
 				
 				$section_code = $this->clean_up_code($section_code[2]);
 				

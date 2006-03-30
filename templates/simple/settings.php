@@ -1,7 +1,7 @@
 <?php
 
 	$config = array(
-		'template_name' => 'simple',
+		// 'key' => 'value
 	);
 
 ?>

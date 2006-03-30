@@ -2,14 +2,14 @@
 
 class config {
 	
-	/*
+/*
 
-		Class: config v0.1 beta
+	Class: config v0.1 beta
 
-		Copyright © 2006 Jim Myhrberg. All rights reserved.
-		zynode@gmail.com
+	Copyright © 2006 Jim Myhrberg. All rights reserved.
+	zynode@gmail.com
 
-	*/
+*/
 	
 	
 	function config ($input=false) {

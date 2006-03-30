@@ -19,9 +19,6 @@ Author: Jim Myhrberg
 //>STAGE> init
 //==========================
 
-//>Section> start_timer:10
-$timer = new speedometer();
-
 
 //>Section> port_correction:20
 if ( stristr($_SERVER['HTTP_HOST'], ':') !== false ) {
@@ -38,7 +35,7 @@ define('DIR_URL', $dir_url);
 define('DIR_PATH', $dir_path);
 define('QUERY_STRING', $query_string);
 
-define('DLIST_URL', $config->url);
+define('DLIST_URL', $config->dlist_url);
 define('TEMPLATE', $config->template);
 define('TPL_PATH', 'templates/'.TEMPLATE.'/');
 define('TPL_URL', DLIST_URL.TPL_PATH);
@@ -59,7 +56,7 @@ $do_sort_reverse = false;
 //>Section> readdir
 if ( $do_readdir ) {
 	//>Section> readdir.start
-	$dlist = new dirlist();
+	$dlist = new dirList();
 	//>Section> readdir.options
 	if ( empty($do_sort_items) ) {
 		$dlist->sort_items = false;
@@ -73,10 +70,6 @@ if ( $do_readdir ) {
 //==========================
 //>STAGE> render
 //==========================
-
-
-//>Section> end_timer:10
-$timer->end();
 
 
 //>Section> echo

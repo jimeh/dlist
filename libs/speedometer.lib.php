@@ -2,6 +2,13 @@
 
 class speedometer {
 	
+/*
+
+	Class: Speedometer v0.1
+	Created to simplify script execution statistics...
+
+*/
+	
 	var $digits = 6;
 	
 	var $start;

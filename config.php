@@ -1,11 +1,19 @@
 <?php
 
-$config = array(
+/*
+
+	dList's main configuration file.
+
+*/
+
+
+$config = array(	
+
 	
 // Main settings
 	
-	'url'         => '/dlist/',
-	'index_files' => array('index', 'default', 'main'),
+	'dlist_url'         => '/dlist/',
+	'index_files' => array('index.html', 'index.php', 'index.htm'),
 	'debug'       => true,
 	
 

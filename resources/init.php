@@ -2,6 +2,8 @@
 
 /*
 	
+	dList Intialization
+	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
 
@@ -28,8 +30,10 @@ if(!preg_match("/\/$/", $dir_url)) $redirect = '/';
 // check for index files and redirect if found
 if ( empty($redirect) ) {
 	foreach($config['index_files'] as $what) {
-		$indexsearch = glob($dir_path.$what.'.*');
-		if(isset($indexsearch[0])) { $redirect = basename($indexsearch[0]); break; }
+		if ( file_exists($dir_path.$what) ) {
+			$redirect = basename($what);
+			break;
+		}
 	}
 }
 if ( !empty($redirect) ) {

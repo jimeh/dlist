@@ -1,10 +1,10 @@
 <?php
 
-class dirlist {
+class dirList {
 
 /*
 
-	Class: dirlist v2.0 beta
+	Class: dirList v2.0 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
