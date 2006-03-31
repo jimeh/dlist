@@ -12,8 +12,7 @@ $config = array(
 	
 // Main settings
 	
-	'dlist_url'         => '/dlist/',
-	'index_files' => array('index.html', 'index.php', 'index.htm'),
+	'dlist_url'   => '/dlist/',
 	'debug'       => true,
 	
 
@@ -27,9 +26,11 @@ $config = array(
 	'iconset'        => 'osx',
 	'allow_override' => true,
 	
-// Server settings
+	
+// dList internal path settings
 
-	'default_scheme' => 'http',
+	'path_plugins' => array('plugins'),
+	'path_cache' => 'cache',
 	
 
 	

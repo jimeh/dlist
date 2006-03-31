@@ -74,7 +74,6 @@ if ( $do_readdir ) {
 
 //>Section> echo
 print_r($dlist->list);
-print_r($config);
 
 
 //_END;

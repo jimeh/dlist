@@ -23,7 +23,7 @@ class execHandler {
 	var $cache_data       = '.data.cache.php';
 	var $cache_details    = '.details.cache.php';
 	var $cache_time       = '.time.cache.php';
-	var $update_frequency = 0;
+	var $update_frequency = 10;
 	var $php_opentag      = "<?php\n";
 	var $php_closetag     = "\n?>";
 	
@@ -32,6 +32,7 @@ class execHandler {
 
 	var $default_stages = array(
 		'init'    => 10,
+		'query'   => 20,
 		'main'    => 50,
 		'render'  => 80,
 		'term'    => 90,
@@ -421,9 +422,10 @@ class execHandler {
 
 // Compiling
 
-	function clean_up_code ($string, $comments=true, $emptylines=true) {
+	function clean_up_code ($string, $comments=true, $emptylines=true, $indents=false) {
 		if ( $comments ) $string = $this->remove_comments($string);
 		if ( $emptylines ) $string = $this->remove_empty_lines($string);
+		if ( $indents ) $string = $this->remove_indents($string);
 		return trim($string);
 	}
 	
@@ -436,6 +438,11 @@ class execHandler {
 	function remove_empty_lines ($string) {
 		$string = str_replace("\r", "\n", $string);
 		$string = preg_replace("/\n+/m", "\n", $string);
+		return $string;
+	}
+	
+	function remove_indents ($string) {
+		$string = preg_replace("/\n\s+(.*)/", "\n$1", $string);
 		return $string;
 	}
 

@@ -16,6 +16,7 @@ class config {
 		if ( !empty($input) ) $this->parse($input);
 	}
 	
+// Main function
 	function parse ($input, $overwrite=true) {
 		if ( is_array($input) ) {
 			$this->parse_array($input, $overwrite);
@@ -28,6 +29,7 @@ class config {
 		}
 	}
 	
+// Parse settings from an array
 	function parse_array ($input, $overwrite=true) {
 		if ( is_array($input) ) {
 			foreach( $input as $key => $value ) {
@@ -44,7 +46,9 @@ class config {
 			return true;
 		} else return false;
 	}
-	
+
+// Parse settings from a defined array inside a php file,
+// $var is the name of the variable inside the php to parse.
 	function parse_php_file ($file, $var='config', $overwrite=true) {
 		if ( is_readable($file) ) {
 			include($file);
@@ -53,9 +57,10 @@ class config {
 		} else return false;
 	}
 	
-	function parse_ini_file ($file, $overwrite=true) {
+// Parse settings from an ini file.
+	function parse_ini_file ($file, $overwrite=true, $parse_sections=true) {
 		if ( is_readable($file) ) {
-			$this->parse_array(parse_ini_file($file, true), $overwrite);
+			$this->parse_array(parse_ini_file($file, $parse_sections), $overwrite);
 		}
 	}
 	

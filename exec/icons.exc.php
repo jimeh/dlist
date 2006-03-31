@@ -1,26 +1,16 @@
 <?php die();
 
 //
-//  Exec: timer
+//  Exec: icons
 //
 //  Copyright © 2006 Jim Myhrberg. All rights reserved.
 //  zynode@gmail.com
 //
 
-
-/*
-
-	Intializes $timer at beginning of exec code, use
-	$timer->end(); in your template to get script
-	execution time.
-
-*/
-
-
 //_HEAD;
 /* --- Configuration ---
-Name: timer
-Priority: 10
+Name: icons
+Priority: 40
 Author: Jim Myhrberg
 */
 //_SCRIPT;
@@ -30,8 +20,11 @@ Author: Jim Myhrberg
 //==========================
 
 
-//>Section> start
-$timer = new speedometer();
+//>After> core.define_constants
+define('ICONS_PATH', '/icons/'.$config->iconset.'/');
+define('ICONS_URL', DLIST_URL.ICONS_PATH);
+
+
 
 
 //_END;

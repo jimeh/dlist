@@ -9,7 +9,7 @@
 
 //_HEAD;
 /* --- Configuration ---
-Name: render
+Name: simple/render
 Priority: 40
 Author: Jim Myhrberg
 */
