@@ -3,44 +3,48 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<title>Index of <?= DIR_URL ?></title>
+		<title>Index of <?=DIR_URL?></title>
 		<style type="text/css" media="screen">
 		/* <![CDATA[ */
-		
-			<? include(TPL_PATH.'stylesheets/media.css') ?>
-			
+<? include(TPL_PATH.'stylesheets/screen.css') ?>
 		/* ]]> */
 		</style>
-		
 	</head>
 	<body id="index">
-		<table border="0" cellspacing="1" cellpadding="3" id="list">
+		<div id="header">
+			Index of <?=DIR_URL?>
+		</div>
+		<table border="0" cellspacing="1" cellpadding="0" id="list">
 			<tr>
-				<th></th>
-				<th>Name</th>
-				<th>Size</th>
-				<th>Date Modified</th>
-				<th>Permissions</th>
-				<th>Owner</th>
+				<th class="icon"></th>
+				<th class="name">Name</th>
+				<th class="size">Size</th>
+				<th class="mtime">Date Modified</th>
+				<th class="perms">Permissions</th>
+				<th class="owner">Owner</th>
 			</tr>
-			<? if (!empty($dlist->parent) || $dlist->parent != '/'): $parent = $dlist->parent; ?>
+			<? if (!empty($parent['name']) || $parent['name'] != '/'): ?>
 			<tr>
-				<td><img src="<?=icons_get_parent('large')?>" class="" alt="" /></td>
-				<td><a href="../"><?=$parent['name']?></a></td>
-				<td><?=$parent['size']?></td>
-				<td><?=$parent['mtime']?></td>
-				<td><?=$parent['perms']?></td>
-				<td><?=$parent['owner']?></td>
+				<td class="icon"><a href="../" title="Parent Directory"><img src="<?=Icon::get_parent($config->tpl_icon_size)?>" class="" alt="" /></a></td>
+				<td class="name"><a href="../" title="Parent Directory">..</a></td>
+				<td class="size"><?=$parent['size']?></td>
+				<td class="mtime"><?=$parent['mtime']?></td>
+				<td class="perms"><?=$parent['perms']?></td>
+				<td class="owner"><?=$parent['owner']?></td>
 			</tr>
 			<? endif ?>
 			<? foreach ($dlist->list as $key => $item): ?>
 			<tr>
-				<td><img src="<?=icons_get_url($item['ext'], 'large', $item['type'])?>" class="" alt="" /></td>
-				<td><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a></td>
-				<td><?=$item['size']?></td>
-				<td><?=$item['mtime']?></td>
-				<td><?=$item['perms']?></td>
-				<td><?=$item['owner']?></td>
+				<td class="icon">
+					<a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>" title="<?=$item['name']?>">
+						<img src="<?=Icon::get_url($item['ext'], $config->tpl_icon_size, $item['type'])?>" class="" alt="" />
+					</a>
+				</td>
+				<td class="name"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a></td>
+				<td class="size"><?=$item['size']?></td>
+				<td class="mtime"><?=$item['mtime']?></td>
+				<td class="perms"><?=$item['perms']?></td>
+				<td class="owner"><?=$item['owner']?></td>
 			</tr>
 			<? endforeach ?>
 		</table>

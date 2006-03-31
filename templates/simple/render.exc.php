@@ -21,7 +21,7 @@ Author: Jim Myhrberg
 
 
 //>After> core.define_constants
-$config->parse(TPL_PATH.'settings.php');
+$config->parse(TPL_PATH.'settings.php', true, 'tpl_');
 
 
 //==========================

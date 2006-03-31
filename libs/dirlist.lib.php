@@ -89,7 +89,6 @@ class dirList {
 	}
 	
 	
-	
 // ==============================================
 //	----- [ Internal Functions ] -----------------
 // ==============================================
@@ -150,10 +149,9 @@ class dirList {
 		$types = array('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 		for($n = 0; $bytes >= 1024; $n++) $bytes = $bytes / 1024;
 		$bytes = number_format($bytes, 2);
-		if ( !empty($bytes[1]) ) {
-			$bytes = explode('.', $bytes);
-			$bytes[1] = rtrim($bytes[1], '0');
-			$bytes = ( $bytes[1] != '' ) ? $bytes[0].'.'.$bytes[1] : $bytes[0] ;
+		if ( preg_match("/([0-9]+)\.([0-9]+)/", $bytes, $bytes) ) {
+			$bytes[2] = rtrim($bytes[2], '0');
+			$bytes = ( !empty($bytes[2]) ) ? $bytes[1].'.'.$bytes[2] : $bytes[1] ;
 		}
 		return $bytes.' '.$types[$n];
 	}

@@ -1,7 +1,7 @@
 <?php
 
 	$config = array(
-		// 'key' => 'value
+		'icon_size' => 'small',
 	);
 
 ?>

@@ -30,6 +30,7 @@ if ($config->debug) $debug_timer = new speedometer();
 // initialize execHandler and main scripts
 $exec = new execHandler();
 $exec->update_frequency = 0;
+$exec->show_debug_msg = false;
 
 
 // configure cache dir for compiled code
@@ -46,7 +47,9 @@ $exec->addPath(
 		'templates/'.$config->template.'/*.exc.php',
 	)
 );
-$exec->addPath($config->path_plugins);
+foreach( $config->path_plugins as $key => $value ) {
+	$exec->addPath($value.'/*.exc.php');
+}
 $exec->cache();
 include($exec->include_file);
 

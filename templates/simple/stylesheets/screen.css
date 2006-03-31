@@ -1,0 +1,74 @@
+BODY {
+	background-color: #FFF;
+	color: #000;
+	font: 11px "Lucida Grande", Tahoma, Verdana, sans-serif;
+	margin: 0xp;
+	padding: 18px;
+}
+
+#header {
+	font: 20px "Myriad Pro", "Trebuchet MS", Verdana, sans-serif;
+	padding: 15px 15px 20px 35px;
+}
+
+#list {
+	background-color: #777;
+	width: 100%;
+}
+
+/* List Headers */
+#list TH {
+	background-color: #CCC;
+	padding: 2px 5px 2px 5px;
+}
+#list TH.name {
+	text-align: left;
+}
+#list TH.icon {
+	padding: 2px;
+	height: 16px;
+	width: 16px;
+}
+#list TH.size {
+	width: 75px;
+}
+#list TH.mtime {
+	width: 175px;
+}
+#list TH.perms {
+	width: 100px;
+}
+#list TH.owner {
+	width: 85px;
+}
+
+/* List Cells */
+#list TD {
+	background-color: #FFF;
+	padding: 2px 5px 2px 5px;
+}
+#list TD.icon {
+	padding: 2px;
+}
+#list TD.size {
+	text-align: right;
+}
+#list TD.mtime {
+	text-align: right;
+}
+#list TD.perms {
+	
+}
+#list TD.owner {
+	
+}
+
+#list TD.name A {
+	width: 100%;
+	display: block;
+}
+
+#stats {
+	text-align: center;
+	padding: 10px;
+}

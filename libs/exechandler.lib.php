@@ -4,7 +4,7 @@ class execHandler {
 	
 /*
 	
-	Class: execHandler v0.7.3 beta
+	Class: execHandler v0.7.4 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -31,17 +31,19 @@ class execHandler {
 // Execution Stage Priority
 
 	var $default_stages = array(
-		'init'    => 10,
-		'query'   => 20,
-		'main'    => 50,
-		'render'  => 80,
-		'term'    => 90,
+		'functions' => 5,
+		'init'      => 10,
+		'query'     => 20,
+		'main'      => 50,
+		'render'    => 80,
+		'term'      => 90,
 	);
 
 
 // Debug?
 
-	var $debug = false;
+	var $debug          = false;
+	var $show_debug_msg = true;
 
 	
 // Misc. Settings
@@ -110,7 +112,7 @@ class execHandler {
 	
 	function cache ($force=false) {
 		if ( $force || $this->debug || !$this->check_cache() ) {
-			if ( $this->debug ) echo "reloading\n";
+			if ( $this->debug && $this->show_debug_msg ) echo "reloading\n";
 			$this->loadFile($this->files_to_load);
 			$this->compile();
 			$this->save_cache();
@@ -124,9 +126,11 @@ class execHandler {
 		} elseif( is_string($input) ) {
 			$result = glob($input);
 		}
-		$result = array_filter($result);
-		if ( is_array($result) ) $result = array_unique($result);
-		$this->files_to_load = array_merge($this->files_to_load, $result);
+		if ( !empty($result) ) {
+			$result = array_filter($result);
+			if ( is_array($result) ) $result = array_unique($result);
+			$this->files_to_load = array_merge($this->files_to_load, $result);
+		}
 	}
 	
 	function loadFile ($input) {

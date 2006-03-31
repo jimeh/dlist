@@ -26,6 +26,10 @@ Author: Jim Myhrberg
 
 //>Section> do_render:5
 if ( $do_render ) {
+	
+//>Section> set_parent:10
+$parent = $dlist->parent;
+	
 //>Section> do_render.end:95
 }
 
