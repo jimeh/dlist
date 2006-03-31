@@ -12,6 +12,7 @@
 Name: core
 Priority: 40
 Author: Jim Myhrberg
+Include: output.exc.php
 */
 //_SCRIPT;
 
@@ -26,7 +27,7 @@ if ( stristr($_SERVER['HTTP_HOST'], ':') !== false ) {
 	$_SERVER['SERVER_PORT'] = $http_host[1];
 	unset($http_host);
 }
-preg_match("/(.*)Port [0-9]{2,8}(.*)/", $_SERVER['SERVER_SIGNATURE'], $serverinfo);
+preg_match("/(.*)Port [0-9]{2,8}(.*)/i", $_SERVER['SERVER_SIGNATURE'], $serverinfo);
 $_SERVER['SERVER_SIGNATURE'] = $serverinfo[1].'Port '.$_SERVER['SERVER_PORT'].$serverinfo[2];
 
 
@@ -73,7 +74,7 @@ if ( $do_readdir ) {
 
 
 //>Section> echo
-print_r($dlist->list);
+//print_r($dlist->list);
 
 
 //_END;

@@ -1,7 +1,7 @@
 <?php die();
 
 //
-//  Exec: render
+//  Exec: render/simple
 //
 //  Copyright © 2006 Jim Myhrberg. All rights reserved.
 //  zynode@gmail.com
@@ -9,7 +9,7 @@
 
 //_HEAD;
 /* --- Configuration ---
-Name: simple/render
+Name: render/simple
 Priority: 40
 Author: Jim Myhrberg
 */
@@ -22,6 +22,15 @@ Author: Jim Myhrberg
 
 //>After> core.define_constants
 $config->parse(TPL_PATH.'settings.php');
+
+
+//==========================
+//>STAGE> render
+//==========================
+
+
+//>Section> include_phtml
+include(TPL_PATH.'index.phtml');
 
 
 //_END;

@@ -9,11 +9,15 @@
 
 */
 
+// initialization script - checks for index files
 require_once('resources/init.php');
+
+// initialize config object
 require_once('libs/config.lib.php');
 $config = new config($config);
 $config->parse_php_file('config.php');
 
+// include required libs
 require_once('libs/speedometer.lib.php');
 require_once('libs/dirlist.lib.php');
 require_once('libs/exechandler.lib.php');
@@ -23,11 +27,12 @@ require_once('libs/exechandler.lib.php');
 if ($config->debug) $debug_timer = new speedometer();
 
 
-// initialize config object
-
-
 // initialize execHandler and main scripts
 $exec = new execHandler();
+$exec->update_frequency = 0;
+
+
+// configure cache dir for compiled code
 $exec->cache_dir = $config->path_cache.'/exec/';
 
 // debug?
@@ -38,12 +43,13 @@ $exec->addPath(
 	array(
 		'exec/core.exc.php',
 		'exec/*',
-		'templates/'.$config->template.'/render.exc.php',
+		'templates/'.$config->template.'/*.exc.php',
 	)
 );
 $exec->addPath($config->path_plugins);
 $exec->cache();
 include($exec->include_file);
+
 
 
 

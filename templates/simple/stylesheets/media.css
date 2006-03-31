@@ -1,0 +1,10 @@
+BODY {
+	background-color: #FFF;
+}
+#list {
+	background-color: #666;
+}
+#list TH, #list TD {
+	background-color: #FFF;
+	padding: 5px;
+}

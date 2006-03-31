@@ -4,7 +4,7 @@ class execHandler {
 	
 /*
 	
-	Class: execHandler v0.7 beta
+	Class: execHandler v0.7.3 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -88,6 +88,7 @@ class execHandler {
 	var $compiled_code = false;
 	var $include_file  = false;
 	var $stages = array();
+	var $parsing_order = array();
 	
 	
 // Construct Function
@@ -109,7 +110,7 @@ class execHandler {
 	
 	function cache ($force=false) {
 		if ( $force || $this->debug || !$this->check_cache() ) {
-			echo "reloading\n";
+			if ( $this->debug ) echo "reloading\n";
 			$this->loadFile($this->files_to_load);
 			$this->compile();
 			$this->save_cache();
@@ -129,14 +130,16 @@ class execHandler {
 	}
 	
 	function loadFile ($input) {
+		$return = true;
 		if ( is_array($input) ) {
 			foreach( $input as $file ) {
 				$result = $this->load_file($file);
-				if ( $result == false ) return false;
+				if ( $result == false ) $return = false;
 			}
 		} elseif ( is_string($input) ) {
 			return $this->load_file($input);
 		}
+		return $return;
 	}
 
 	function compile () {
@@ -153,8 +156,7 @@ class execHandler {
 					$pr = explode('|', $key, 2);
 					$pr = $pr[0];
 					$this->compiled_code
-							.= ( $new_stage ) ? "\n// Code Piece: ".$code.":".$pr."\n" : "\n\n// Code Piece: ".$code.":".$pr."\n" ;
-					//$this->compiled_code .= "\n// Code Piece: ".$code."\n";
+							.= ( $new_stage ) ? "\n// Section: ".$code.":".$pr."\n" : "\n\n// Section: ".$code.":".$pr."\n" ;
 					$this->compiled_code .= $this->clean_up_code($this->code[$stage][$code]);
 					$new_stage = false;
 				} else {
@@ -184,9 +186,9 @@ class execHandler {
 				$content['file'] = $file;
 				if ( $included ) $content['included'] = true;
 				$this->files[$file] = $content;
-				return true;
-			}else return false;
-		} 
+			} else return false;
+		}
+		return true;
 	}
 
 	function sort_stage_list () {
@@ -199,6 +201,10 @@ class execHandler {
 	}
 
 	function parse ($string, $file) {
+		
+	// parse order statistics
+		$this->parsing_order[] = $file;
+		
 	// Filter Out Main Content
 		$file_start = $this->addslashes($this->file_start);
 		$code_delim = $this->addslashes($this->code_delim);
@@ -215,6 +221,7 @@ class execHandler {
 	// Stage Loop
 		$n = '001';
 		foreach ( $code as $value ) {
+			$sort_name = str_pad($settings['name'], 24, '_', STR_PAD_RIGHT);
 			preg_match("/^(.*?)$(?s)(.*)/im", $value, $stage_code);
 			if ( preg_match("/(.*)".$this->priority_delim."([0-9]{1,2})/i", trim($stage_code[1]), $stage) ) {
 				$stage_priority = $stage[2];
@@ -231,13 +238,14 @@ class execHandler {
 			$stage_code[0] = $this->clean_up_code($stage_code[0]);
 			if ( !empty($stage_code[0]) ) {
 				$this->code[$stage][$settings['name'].'.'.$this->default_stage_code] = "\n".$stage_code[0];
-				$this->execution_order[$stage][$this->default_priority.'|'.$settings['name'].':'.$n.':'.$this->default_stage_code.'__main']
+				$this->execution_order[$stage][$this->default_priority.'|'.$sort_name.':'.$n.':'.$this->default_stage_code.'__main']
 						= $settings['name'].'.'.$this->default_stage_code;
 				$this->order_id[$stage][$settings['name'].'.'.$this->default_stage_code]
-						= $this->default_priority.'|'.$settings['name'].':'.$n.':'.'.'.$this->default_stage_code.'__main';
+						= $this->default_priority.'|'.$sort_name.':'.$n.':'.'.'.$this->default_stage_code.'__main';
 				$n = str_pad($n+1, 3, '0', STR_PAD_LEFT);
 			}
 			array_shift($stage_code);
+			
 			
 		// Section Loop
 			foreach( $stage_code as $value ) {
@@ -259,6 +267,8 @@ class execHandler {
 				}
 				
 				$section_code = $this->clean_up_code($section_code[2]);
+				$priority = str_pad($priority, 2, '0', STR_PAD_LEFT);
+				$section_sort_name = str_pad($section, 24, '_', STR_PAD_RIGHT);
 				
 				if ( !empty($section_code) ) {
 					
@@ -270,15 +280,15 @@ class execHandler {
 					elseif ( $handler == $this->insert_before || $handler == $this->insert_after ) {
 						$placement = ( $handler == $this->insert_before ) ? '___before' : '_zafter' ;
 						$this->code[$stage][$settings['name'].'.'.$section] = "\n".$section_code;
-						$this->execution_order[$stage][$this->order_id[$stage][$section].$placement.'|'.$priority.'|'.$settings['name'].':'.$n]
+						$this->execution_order[$stage][$this->order_id[$stage][$section].$placement.'|'.$priority.'|'.$sort_name.':'.$n]
 								= $settings['name'].'.'.$section;
 					}
 					// section
 					elseif ( $handler == $this->section_delim || $handler == '' ) {
 						$this->code[$stage][$settings['name'].'.'.$section] = "\n".$section_code;
-						$this->execution_order[$stage][$priority.'|'.$settings['name'].':'.$n.':'.$section.'__main']
+						$this->execution_order[$stage][$priority.'|'.$sort_name.':'.$n.':'.$section_sort_name.'__main']
 								= $settings['name'].'.'.$section;
-						$this->order_id[$stage][$settings['name'].'.'.$section] = $priority.'|'.$settings['name'].':'.$n.':'.$section;
+						$this->order_id[$stage][$settings['name'].'.'.$section] = $priority.'|'.$sort_name.':'.$n.':'.$section_sort_name;
 					}
 				}
 				$n = str_pad($n+1, 3, '0', STR_PAD_LEFT);
@@ -329,6 +339,9 @@ class execHandler {
 	function save_cache ($force_compile=false) {
 		if(!preg_match("/\/$/", $this->cache_dir)) $this->cache_dir .= '/';
 		if ( is_writeable($this->cache_dir) ) {
+			if ( !file_exists($this->cache_dir.'.htaccess') ) {
+				$this->write2file($this->cache_dir.'.htaccess', 'Deny from all');
+			}
 			$cache_details = '';
 			foreach( $this->files as $key => $value ) {
 				$cache_details .= $value['file'].'='.$value['md5'];
@@ -411,6 +424,7 @@ class execHandler {
 	function include_files ($input, $dirname='.') {
 		$include_files = explode($this->include_seperator, $input);
 		foreach( $include_files as $key => $value ) {
+			$value = trim($value);
 			if ( $dirname == '.' && is_readable($value) ) {
 				$this->load_file($value, true);
 			} elseif ( is_readable($dirname.'/'.$value) ) {
@@ -425,7 +439,7 @@ class execHandler {
 	function clean_up_code ($string, $comments=true, $emptylines=true, $indents=false) {
 		if ( $comments ) $string = $this->remove_comments($string);
 		if ( $emptylines ) $string = $this->remove_empty_lines($string);
-		if ( $indents ) $string = $this->remove_indents($string);
+		if ( $indents && $this->debug != true) $string = $this->remove_indents($string);
 		return trim($string);
 	}
 	

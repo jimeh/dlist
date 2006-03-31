@@ -4,7 +4,7 @@ class config {
 	
 /*
 
-	Class: config v0.1 beta
+	Class: config v0.2 beta
 
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -17,7 +17,8 @@ class config {
 	}
 	
 // Main function
-	function parse ($input, $overwrite=true) {
+	function parse ($input, $overwrite=true, $pad=false) {
+		if ( !empty($pad) ) $this->_config_pad = $pad;
 		if ( is_array($input) ) {
 			$this->parse_array($input, $overwrite);
 		} elseif ( is_string($input) ) {
@@ -27,6 +28,7 @@ class config {
 				$this->parse_ini_file($input);
 			}
 		}
+		unset($this->_config_pad);
 	}
 	
 // Parse settings from an array
@@ -36,10 +38,12 @@ class config {
 				if ( is_array($value) ) {
 					foreach( $value as $k => $v ) {
 						if ( ($empty = empty($this->$key)) || $overwrite ) {
+							if ( !empty($this->_config_pad) ) $k = $this->_config_pad.$k;
 							$this->$key = ( $empty ) ? array($k=>$v) : array_merge($this->$key, array($k=>$v)) ;
 						}
 					}
-				} else {
+				} else {	
+					if ( !empty($this->_config_pad) ) $key = $this->_config_pad.$key;
 					if ( $overwrite || empty($this->$key) ) $this->$key = $value;
 				}
 			}

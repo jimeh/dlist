@@ -15,8 +15,6 @@ $config['index_files'] = array('index.html', 'index.php', 'index.htm');
 $config['default_scheme'] = 'http';
 
 
-
-
 // process requested path
 if ( stristr($_SERVER['REQUEST_URI'], '?') !== false ) {
 	$dir_url = explode('?', $_SERVER['REQUEST_URI']);

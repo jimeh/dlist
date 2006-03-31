@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.0 beta
+	Class: dirList v2.0.2 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -21,14 +21,16 @@ class dirList {
 	var $reverse = false;
 
 	// Smart date formatting
+	var $use_smartdate = true;
 	var $smartdate = '{date}, {time}';
 	var $smartdate_date = 'F d, Y';
 	var $smartdate_time = 'H:i';
+	var $standard_date_format = 'F d, Y, H:i';
 	
 	
 	// Internals
 	var $error = false;
-	var $this_dir;
+	var $parent;
 	var $list = array();
 	var $sort_by = array();
 	
@@ -37,7 +39,8 @@ class dirList {
 	var $stats_folders = 0;
 	var $stats_totalsize = 0;
 	
-	// Construtor
+	// Construtor - does nothing, but is here just
+	// incase it might do something in the future...
 	function dirlist() {
 		
 	}
@@ -50,7 +53,7 @@ class dirList {
 		if(!preg_match("/\/$/", $dir)) $dir .= '/';
 		$this->sort_by = explode(',', $this->default_sort);
 		if($dh = @opendir($dir)) {
-			$this->this_dir = $this->getDetails($dir);
+			$this->parent = $this->getDetails($dir);
 			while(false !== ($item = readdir($dh))) {
 				$hidden_item = ( $this->show_hidden ) ? false : preg_match("/^\./", $item) ;
 				if( ($item != '.' && $item != '..') && !$hidden_item ) {
@@ -64,12 +67,17 @@ class dirList {
 						$this->stats_folders++;
 					}
 					// sorting
-					$list_key = ( $this->folders_first ) ? $item_details['type'].'|' : '' ;
-					foreach( $this->sort_by as $v ) {
-						if ( $v == 'size' ) $v = 'size_raw';
-						$list_key .= ( $v == 'size_raw' || $v == 'mtime' ) ? str_pad($item_details[$v], 28, '0', STR_PAD_LEFT).'|' : $item_details[$v].'|' ;
+					if ( $this->sort_items ) {
+						$list_key = ( $this->folders_first ) ? $item_details['type'].'|' : '' ;
+						foreach( $this->sort_by as $v ) {
+							if ( $v == 'size' ) $v = 'size_raw';
+							if ( $v == 'mtime' ) $v = 'mtime_raw';
+							$list_key .= ( $v == 'size_raw' || $v == 'mtime' ) ? str_pad($item_details[$v], 28, '0', STR_PAD_LEFT).'|' : $item_details[$v].'|' ;
+						}
+						$this->list[strtolower($list_key)] = $item_details;
+					} else {
+						$this->list[] = $item_details;
 					}
-					$this->list[$list_key] = $this->getDetails($dir.$item);
 				}
 			}
 			if ( $this->sort_items ) {
@@ -80,42 +88,63 @@ class dirList {
 		closedir($dh);
 	}
 	
-	function getDetails ($item) {
-		$item = str_replace("\\", '/', $item);
-		$return['name'] = ( preg_match("/^.*\/(.*)/", $item, $name) ) ? $name[1] : $item ;
-
-	// Owner and Group
-		if ( ($group = $this->getGroup($item)) != false ) $return = array_merge($return, $group);
-		if ( ($owner = $this->getOwner($item)) != false ) $return = array_merge($return, $owner);
-	
-	// Last Modified
-		$return['mtime'] = filemtime($item);
-		$return['mtimef'] = $this->smartDate($return['mtime'], $this->smartdate_date, $this->smartdate_time, $this->smartdate);
-		
-	// Permissions and CHMOD value
-		$return['perms'] = $this->format_perms(fileperms($item));
-		$return['chmod'] = substr(sprintf('%o', fileperms($item)), -4);
-		
-		$return['type_raw'] = filetype($item);
-			
-		if ( is_file($item) ) {
-			$return['type'] = 'file';
-			$return['ext'] = ( preg_match("/^.*\.(.*)/", $return['name'], $ext) ) ? $ext[1] : '' ;
-			$return['size_raw'] = filesize($item);
-			$return['size'] = $this->format_filesize($return['size_raw']);
-		} elseif ( is_dir($item) ) {
-			$return['type'] = 'dir';
-			$return['ext'] = '';
-			$return['size_raw'] = '';
-			$return['size'] = '-';
-		}
-		return $return;
-	}
 	
 	
 // ==============================================
 //	----- [ Internal Functions ] -----------------
 // ==============================================
+
+	function getDetails ($item) {
+		$item = str_replace("\\", '/', $item);
+		$return['name'] = basename($item);
+
+	// Owner and Group
+		if ( ($group = $this->getGroup($item)) != false ) $return = array_merge($return, $group);
+		if ( ($owner = $this->getOwner($item)) != false ) $return = array_merge($return, $owner);
+
+	// Last Modified
+		$return['mtime_raw'] = filemtime($item);
+		if ( $this->use_smartdate ) {
+			$return['mtime'] = $this->smartDate($return['mtime_raw'], $this->smartdate_date, $this->smartdate_time, $this->smartdate);
+		} else {
+			$return['mtime'] = date($this->standard_date_format, $return['mtime_raw']);
+		}
+	
+	// Permissions and CHMOD value
+		$return['perms'] = $this->format_perms(fileperms($item));
+		$return['chmod'] = substr(sprintf('%o', fileperms($item)), -4);
+	
+		$return['type_raw'] = filetype($item);
+		
+		$return['ext'] = ( preg_match("/^.*\.(.*)/", $return['name'], $ext) ) ? $ext[1] : '' ;
+		
+		if ( is_file($item) ) {
+			$return['type'] = 'file';
+			$return['size_raw'] = filesize($item);
+			$return['size'] = $this->format_filesize($return['size_raw']);
+		} elseif ( is_dir($item) ) {
+			$return['type'] = 'dir';
+			$return['size_raw'] = '';
+			$return['size'] = '-';
+		}
+		return $return;
+	}
+
+	function getOwner ($item) {
+		if ( function_exists('posix_getpwuid') ) {
+			$id = fileowner($item);
+			$name = posix_getpwuid($id);
+			return array('ownerid'=>$id, 'owner'=>$name['name']);
+		} else { return false; }
+	}
+
+	function getGroup ($item) {
+		if ( function_exists('posix_getgrgid') ) {
+			$id = filegroup($item);
+			$name = posix_getgrgid($id);
+			return array('groupid'=>$id, 'group'=>$name['name']);
+		} else { return false; }
+	}
 
 	function format_filesize($bytes) {
 		$types = array('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
@@ -169,22 +198,6 @@ class dirList {
 		$info .= (($perms & 0x0002) ? 'w' : '-');
 		$info .= (($perms & 0x0001) ? (($perms & 0x0200) ? 't' : 'x' ) : (($perms & 0x0200) ? 'T' : '-'));
 		return $info;
-	}
-
-	function getOwner ($item) {
-		if ( function_exists('posix_getpwuid') ) {
-			$id = fileowner($item);
-			$name = posix_getpwuid($id);
-			return array('ownerid'=>$id, 'owner'=>$name['name']);
-		} else { return false; }
-	}
-
-	function getGroup ($item) {
-		if ( function_exists('posix_getgrgid') ) {
-			$id = filegroup($item);
-			$name = posix_getgrgid($id);
-			return array('groupid'=>$id, 'group'=>$name['name']);
-		} else { return false; }
 	}
 
 }

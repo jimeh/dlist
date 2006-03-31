@@ -29,7 +29,7 @@ $config = array(
 	
 // dList internal path settings
 
-	'path_plugins' => array('plugins'),
+	'path_plugins' => array('plugins/*'),
 	'path_cache' => 'cache',
 	
 
