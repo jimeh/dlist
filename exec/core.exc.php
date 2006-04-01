@@ -63,6 +63,7 @@ if ( $do_readdir ) {
 		$dlist->sort_items = false;
 	} elseif (!empty($do_sort_reverse)) $dlist->reverse = true;
 	if ($config->show_hidden) $dlist->show_hidden = true;
+	if ( !$config->smartdate ) $dlist->use_smartdate = false;
 	//>Section> readdir.read
 	$dlist->read(DIR_PATH);
 	//>Section> readdir.end

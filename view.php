@@ -2,7 +2,7 @@
 
 /*
 	
-	dList v2.0 beta
+	dList v2.1.1 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -23,8 +23,12 @@ require_once('libs/dirlist.lib.php');
 require_once('libs/exechandler.lib.php');
 
 
-// initialize debug stopwatch
-if ($config->debug) $debug_timer = new speedometer();
+// initialize $timer
+$timer = new speedometer();
+
+
+// autodetect dList's install URL if not set
+if ( empty($config->dlist_url) ) $config->dlist_url = preg_replace("/(.*)\/(.*?)$/i", "$1/", $_SERVER['SCRIPT_NAME']);
 
 
 // initialize execHandler and main scripts
@@ -55,10 +59,8 @@ include($exec->include_file);
 
 
 
-
 if ($config->debug) {
-	$debug_timer->end();
-	echo "<br />\npage generated in ".$debug_timer->time." sec.<br />\n";
+	echo "<br />\npage generated in ".$timer->end(8)." sec.<br />\n";
 }
 
 

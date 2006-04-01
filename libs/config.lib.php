@@ -22,7 +22,7 @@ class config {
 		if ( is_array($input) ) {
 			$this->parse_array($input, $overwrite);
 		} elseif ( is_string($input) ) {
-			if ( preg_match("/.php$/", $input) ) {
+			if ( preg_match("/.*\.php$/", $input) ) {
 				$this->parse_php_file($input, 'config', $overwrite);
 			} else {
 				$this->parse_ini_file($input);

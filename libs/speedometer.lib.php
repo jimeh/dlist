@@ -4,7 +4,7 @@ class speedometer {
 	
 /*
 
-	Class: Speedometer v0.1
+	Class: Speedometer v0.1.1
 	Created to simplify script execution statistics...
 
 */
@@ -19,9 +19,10 @@ class speedometer {
 		$this->start = $this->getmicrotime();
 	}
 	
-	function end () {
+	function end ($digits=false) {
 		$end = $this->getmicrotime();
-		return $this->time = number_format( ($end - $this->start), $this->digits);
+		$digits = ( preg_match("/[0-9]{1,2}/", $digits) ) ? $digits : $this->digits ;
+		return $this->time = number_format( ($end - $this->start), $digits);
 	}
 	
 	function getmicrotime () {

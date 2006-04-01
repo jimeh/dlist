@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.0.2 beta
+	Class: dirList v2.0.4 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -23,9 +23,23 @@ class dirList {
 	// Smart date formatting
 	var $use_smartdate = true;
 	var $smartdate = '{date}, {time}';
+	var $smartdate_date = '%B %d, %Y';
+	var $smartdate_time = '%H:%M';
+	var $standard_date_format = '%B %d, %Y, %H:%M';
+	
+	/*
+	var $smartdate = '{date}, {time}';
 	var $smartdate_date = 'F d, Y';
 	var $smartdate_time = 'H:i';
 	var $standard_date_format = 'F d, Y, H:i';
+	*/
+	
+	// Smart date language settings
+	var $lang_tomorrow   = 'Tomorrow';
+	var $lang_today      = 'Today';
+	var $lang_yesterday  = 'Yesterday';
+	var $lang_2_days_ago = '2 days ago';
+	var $lang_3_days_ago = '3 days ago';
 	
 	
 	// Internals
@@ -149,15 +163,20 @@ class dirList {
 		$types = array('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 		for($n = 0; $bytes >= 1024; $n++) $bytes = $bytes / 1024;
 		$bytes = number_format($bytes, 2);
-		if ( preg_match("/([0-9]+)\.([0-9]+)/", $bytes, $bytes) ) {
-			$bytes[2] = rtrim($bytes[2], '0');
-			$bytes = ( !empty($bytes[2]) ) ? $bytes[1].'.'.$bytes[2] : $bytes[1] ;
+		if ( preg_match("/^([0-9]+)(\.|,)([0-9]+0)$/", $bytes, $split) ) {
+			$bytes = ( ($split[3] = rtrim($split[3], '0')) == '' ) ? $split[1] : $split[1].$split[2].$split[3] ;
 		}
 		return $bytes.' '.$types[$n];
 	}
 
-	function smartDate ($timestamp, $datef='jS M, Y', $timef='H:i', $mainf='{date}, {time}') {
-		$array = array('Today'=>0, 'Yesterday'=>-1, '2 days ago'=>-2, '3 days ago'=>-3, 'Tomorrow'=>1);
+	function smartDate ($timestamp, $datef='%B %d, %Y', $timef='%H:%M', $mainf='{date}, {time}') {
+		$array = array(
+			$this->lang_tomorrow   => 1,
+			$this->lang_today      => 0,
+			$this->lang_yesterday  => -1,
+			$this->lang_2_days_ago => -2,
+			$this->lang_3_days_ago => -3,
+		);
 		$now = time();
 		// check if timestamp is more than 96 hours ago
 		if ( $timestamp >= ($now - 345600) ) {
@@ -166,12 +185,12 @@ class dirList {
 				$test = date("d:m:Y", ($now + (86400 * $value) ) );
 				if( $check == $test ) {
 					$return = str_replace('{date}', $key, $mainf);
-					return str_replace('{time}', date($timef, $timestamp), $return);
+					return str_replace('{time}', strftime($timef, $timestamp), $return);
 				}
 			}
 		}
-		$return = str_replace('{date}', date($datef, $timestamp), $mainf);
-		return str_replace('{time}', date($timef, $timestamp), $return);
+		$return = str_replace('{date}', strftime($datef, $timestamp), $mainf);
+		return str_replace('{time}', strftime($timef, $timestamp), $return);
 	}
 
 	function format_perms($perms) {
