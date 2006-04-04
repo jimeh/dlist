@@ -1,0 +1,34 @@
+<table border="0" cellspacing="1" cellpadding="0" id="list">
+	<tr>
+		<th class="icon"></th>
+		<th class="name"><a href="<?=Sort::get_url('name')?>"><?=$lang->name?></a></th>
+		<th class="size"><a href="<?=Sort::get_url('size')?>"><?=$lang->size?></a></th>
+		<th class="mtime"><a href="<?=Sort::get_url('mtime')?>"><?=$lang->mtime?></a></th>
+		<th class="perms"><a href="<?=Sort::get_url('perms')?>"><?=$lang->perms?></a></th>
+		<th class="owner"><a href="<?=Sort::get_url('owner')?>"><?=$lang->owner?></a></th>
+	</tr>
+	<? if ( !$is_root ): ?>
+	<tr>
+		<td class="icon"><a href="../" title="<?=$lang->parent_dir?>"><img src="<?=Icon::get_parent($config->tpl_icon_size)?>" class="" alt="" /></a></td>
+		<td class="name"><a href="../" title="<?=$lang->parent_dir?>">..</a></td>
+		<td class="size">-</td>
+		<td class="mtime">-</td>
+		<td class="perms"><?=$parent['perms']?></td>
+		<td class="owner"><?=$parent['owner']?></td>
+	</tr>
+	<? endif ?>
+	<? foreach ($dlist->list as $key => $item): ?>
+	<tr>
+		<td class="icon">
+			<a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>" title="<?=$item['name']?>">
+				<img src="<?=Icon::get_url($item['ext'], 'small', $item['type'])?>" class="" alt="" />
+			</a>
+		</td>
+		<td class="name"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a></td>
+		<td class="size"><?=$item['size']?></td>
+		<td class="mtime"><?=$item['mtime']?></td>
+		<td class="perms"><?=$item['perms']?></td>
+		<td class="owner"><?=$item['owner']?></td>
+	</tr>
+	<? endforeach ?>
+</table>

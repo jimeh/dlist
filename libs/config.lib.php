@@ -33,12 +33,13 @@ class config {
 	
 // Parse settings from an array
 	function parse_array ($input, $overwrite=true) {
+		$pad = '';
 		if ( is_array($input) ) {
 			foreach( $input as $key => $value ) {
 				if ( is_array($value) ) {
+					if ( !empty($this->_config_pad) ) $key = $this->_config_pad.$key;
 					foreach( $value as $k => $v ) {
 						if ( ($empty = empty($this->$key)) || $overwrite ) {
-							if ( !empty($this->_config_pad) ) $k = $this->_config_pad.$k;
 							$this->$key = ( $empty ) ? array($k=>$v) : array_merge($this->$key, array($k=>$v)) ;
 						}
 					}

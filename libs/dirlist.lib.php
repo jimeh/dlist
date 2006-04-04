@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.0.4 beta
+	Class: dirList v2.0.6 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -12,13 +12,16 @@ class dirList {
 */
 	
 	// General settings
-	var $default_sort = 'name,mtime,size';
+	var $sort_by = 'name';
 	var $folders_first = true;
 	var $show_hidden = false;
 	
+
 	// Sorting
 	var $sort_items = true;
 	var $reverse = false;
+	var $sort_order = array();
+
 
 	// Smart date formatting
 	var $use_smartdate = true;
@@ -27,13 +30,7 @@ class dirList {
 	var $smartdate_time = '%H:%M';
 	var $standard_date_format = '%B %d, %Y, %H:%M';
 	
-	/*
-	var $smartdate = '{date}, {time}';
-	var $smartdate_date = 'F d, Y';
-	var $smartdate_time = 'H:i';
-	var $standard_date_format = 'F d, Y, H:i';
-	*/
-	
+
 	// Smart date language settings
 	var $lang_tomorrow   = 'Tomorrow';
 	var $lang_today      = 'Today';
@@ -46,7 +43,6 @@ class dirList {
 	var $error = false;
 	var $parent;
 	var $list = array();
-	var $sort_by = array();
 	
 	var $stats_count = 0;
 	var $stats_files = 0;
@@ -56,6 +52,20 @@ class dirList {
 	// Construtor - does nothing, but is here just
 	// incase it might do something in the future...
 	function dirlist() {
+		// sorting orders
+		$this->sort_order = array(
+			'name'    => 'name,mtime,size',
+			'size'    => 'size,name,mtime',
+			'mtime'   => 'mtime,name,size',
+			'type'    => 'type,name,size,mtime',
+			'ext'     => 'ext,name,size,mtime',
+			'group'   => 'group,name,size,mtime',
+			'owner'   => 'owner,name,size,mtime',
+			'chmod'   => 'chmod,name,size,mtime',
+			'perms'   => 'chmod,name,size,mtime',
+			'groupid' => 'groupid,name,size,mtime',
+			'ownerid' => 'ownerid,name,size,mtime',
+		);
 		
 	}
 	
@@ -65,7 +75,8 @@ class dirList {
 	
 	function read ($dir) {
 		if(!preg_match("/\/$/", $dir)) $dir .= '/';
-		$this->sort_by = explode(',', $this->default_sort);
+		$sort_by = ( !empty($this->sort_order[$this->sort_by]) ) ? $this->sort_order[$this->sort_by] : $this->sort_order['name'] ;
+		$sort_by = explode(',', $sort_by);
 		if($dh = @opendir($dir)) {
 			$this->parent = $this->getDetails($dir);
 			while(false !== ($item = readdir($dh))) {
@@ -83,7 +94,7 @@ class dirList {
 					// sorting
 					if ( $this->sort_items ) {
 						$list_key = ( $this->folders_first ) ? $item_details['type'].'|' : '' ;
-						foreach( $this->sort_by as $v ) {
+						foreach( $sort_by as $v ) {
 							if ( $v == 'size' ) $v = 'size_raw';
 							if ( $v == 'mtime' ) $v = 'mtime_raw';
 							$list_key .= ( $v == 'size_raw' || $v == 'mtime' ) ? str_pad($item_details[$v], 28, '0', STR_PAD_LEFT).'|' : $item_details[$v].'|' ;

@@ -4,7 +4,7 @@ class execHandler {
 	
 /*
 	
-	Class: execHandler v0.7.4 beta
+	Class: execHandler v0.7.5 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -43,7 +43,7 @@ class execHandler {
 // Debug?
 
 	var $debug          = false;
-	var $show_debug_msg = true;
+	var $show_debug_msg = false;
 
 	
 // Misc. Settings
@@ -206,14 +206,16 @@ class execHandler {
 
 	function parse ($string, $file) {
 		
-	// parse order statistics
-		$this->parsing_order[] = $file;
-		
 	// Filter Out Main Content
 		$file_start = $this->addslashes($this->file_start);
 		$code_delim = $this->addslashes($this->code_delim);
 		$file_end = $this->addslashes($this->file_end);
-		preg_match("/^".$file_start."$(.*)^".$code_delim."$(.*)^".$file_end."$/ims", $string, $code);
+		if ( preg_match("/^".$file_start."$(.*)^".$code_delim."$(.*)^".$file_end."$/ims", $string, $code) ) {
+			$this->parsing_order[] = $file;
+		} else {
+			$this->parsing_order[] = 'INVALID:'.$file;
+			return false;
+		}
 
 	// Read Settings
 		$settings = $this->read_file_settings($code[1], $file);

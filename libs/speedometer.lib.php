@@ -4,12 +4,13 @@ class speedometer {
 	
 /*
 
-	Class: Speedometer v0.1.1
+	Class: Speedometer v0.2
 	Created to simplify script execution statistics...
 
 */
 	
 	var $digits = 6;
+	var $pattern = '%s'; // must contain %s
 	
 	var $start;
 	var $time;
@@ -19,7 +20,17 @@ class speedometer {
 		$this->start = $this->getmicrotime();
 	}
 	
-	function end ($digits=false) {
+	// return with pattern
+	function end ($digits=false, $pattern=false) {
+		$end = $this->getmicrotime();
+		$digits = ( preg_match("/[0-9]{1,2}/", $digits) ) ? $digits : $this->digits ;
+		$pattern = ( stristr($pattern, '%s') != false ) ? $pattern : $this->pattern ;
+		$this->time = number_format( ($end - $this->start), $digits);
+		return str_replace('%s', $this->time, $pattern);
+	}
+	
+	// return time only ignoring pattern
+	function term ($digits=false) {
 		$end = $this->getmicrotime();
 		$digits = ( preg_match("/[0-9]{1,2}/", $digits) ) ? $digits : $this->digits ;
 		return $this->time = number_format( ($end - $this->start), $digits);

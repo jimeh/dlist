@@ -2,7 +2,7 @@
 
 /*
 	
-	dList v2.1.1 beta
+	dList v2.1.2 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -34,7 +34,6 @@ if ( empty($config->dlist_url) ) $config->dlist_url = preg_replace("/(.*)\/(.*?)
 // initialize execHandler and main scripts
 $exec = new execHandler();
 $exec->update_frequency = 0;
-$exec->show_debug_msg = false;
 
 
 // configure cache dir for compiled code
@@ -58,11 +57,11 @@ $exec->cache();
 include($exec->include_file);
 
 
-
+/*
 if ($config->debug) {
-	echo "<br />\npage generated in ".$timer->end(8)." sec.<br />\n";
+	echo "<br />\npage generated in ".$timer->term(8)." sec.<br />\n";
 }
-
+*/
 
 
 ?>

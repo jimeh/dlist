@@ -1,0 +1,13 @@
+<table border="0" cellspacing="0" cellpadding="0" id="icons"><tr><td>
+<div id="sort-nav">
+	<a href="<?=Sort::get_url('name')?>"><?=$lang->name?></a> | <a href="<?=Sort::get_url('size')?>"><?=$lang->size?></a> | <a href="<?=Sort::get_url('mtime')?>"><?=$lang->mtime?></a>
+</div>
+<ul>
+	<? if ( !$is_root ): ?>
+<li><a href="../"><img src="<?=Icon::get_parent('large')?>" alt="" /><p class="name">..</p><p class="info"><?=$lang->parent_dir?></p></a></li>
+	<? endif ?>
+	<? foreach ($dlist->list as $key => $item): $info = ($item['type'] == 'file') ? $item['size'] : $item['mtime'] ;?>
+<li><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><img src="<?=Icon::get_url($item['ext'], 'large', $item['type'])?>" alt="" /><p class="name"><?=$item['name']?></p><p class="info"><?=$info?></p></a></li>
+	<? endforeach ?>
+</ul>	
+</td></tr></table>

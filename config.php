@@ -18,6 +18,9 @@ $config = array(
 	# show debug messages, for exechandler to always re-parse all files
 	'debug'     => true,
 	
+	# by default dList will sort by this
+	'default_sort' => 'name',
+	
 
 // File system settings
 
@@ -44,9 +47,11 @@ $config = array(
 // dList internal settings - don't change if you don't know what you're doing
 
 	'default_lang' => 'english',
-	'default_locale' => array('en', 'en_US'),
+	'default_locale' => array('eng', 'en_US'),
 	'path_plugins' => array('plugins'),
 	'path_cache' => 'cache',
+
+	'req_lang_ver' => '1.0.2',
 	
 
 	

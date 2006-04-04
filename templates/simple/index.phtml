@@ -4,6 +4,7 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<title><?=$lang->index_of.' '.DIR_URL?></title>
+		<script src="<?=TPL_URL?>javascripts/main.js" type="text/javascript" language="javascript" charset="utf-8"></script>
 		<style type="text/css" media="screen">
 		/* <![CDATA[ */
 <? include(TPL_PATH.'stylesheets/screen.css') ?>
@@ -14,42 +15,15 @@
 		<div id="header">
 			<?=$lang->index_of.' '.DIR_URL?>
 		</div>
-		<table border="0" cellspacing="1" cellpadding="0" id="list">
-			<tr>
-				<th class="icon"></th>
-				<th class="name"><?=$lang->name?></th>
-				<th class="size"><?=$lang->size?></th>
-				<th class="mtime"><?=$lang->mtime?></th>
-				<th class="perms"><?=$lang->perms?></th>
-				<th class="owner"><?=$lang->owner?></th>
-			</tr>
-			<? if ( DIR_URL != '' && DIR_URL != '/'): ?>
-			<tr>
-				<td class="icon"><a href="../" title="Parent Directory"><img src="<?=Icon::get_parent($config->tpl_icon_size)?>" class="" alt="" /></a></td>
-				<td class="name"><a href="../" title="Parent Directory">..</a></td>
-				<td class="size"><?=$parent['size']?></td>
-				<td class="mtime"><?=$parent['mtime']?></td>
-				<td class="perms"><?=$parent['perms']?></td>
-				<td class="owner"><?=$parent['owner']?></td>
-			</tr>
-			<? endif ?>
-			<? foreach ($dlist->list as $key => $item): ?>
-			<tr>
-				<td class="icon">
-					<a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>" title="<?=$item['name']?>">
-						<img src="<?=Icon::get_url($item['ext'], $config->tpl_icon_size, $item['type'])?>" class="" alt="" />
-					</a>
-				</td>
-				<td class="name"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a></td>
-				<td class="size"><?=$item['size']?></td>
-				<td class="mtime"><?=$item['mtime']?></td>
-				<td class="perms"><?=$item['perms']?></td>
-				<td class="owner"><?=$item['owner']?></td>
-			</tr>
-			<? endforeach ?>
-		</table>
+		<div id="view-nav">
+			<a href="javascript:;" onclick="set_view('icons')">Icons</a> | <a href="javascript:;" onclick="set_view('tiles')">Tiles</a> | <a href="javascript:;" onclick="set_view('details')">Details</a>
+		</div>
+		<div id="server-info"><?=SERVER_INFO?></div>
+		<div id="files">
+<? include(TPL_PATH.$config->tpl_mode) ?>
+		</div>
 		<div id="stats">
-			<?=$lang->page_generated.' '.$timer->end(6).' '.$lang->seconds?>.
+			<div id="timer">Powered by dList. <?=$timer->end()?>.</div>
 		</div>
 	</body>
 </html>

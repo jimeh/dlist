@@ -4,28 +4,30 @@ class lang {
 
 	// Language settings
 	var $_language = 'english';
-	var $_version = 1.0;
+	var $_version = '1.0.3';
 	
 
 	// Locale settings
-	var $_locale = array('en', 'en_US');
+	var $_locale = array('eng', 'en_US');
 
 
 	// General strings
 	var $index_of = 'Index of';
+	var $parent_dir = 'Parent Directory';
 	
-	var $name = 'Name';
-	var $size = 'Size';
-	var $mtime = 'Date Modified';
-	var $perms = 'Permissions';
-	var $chmod = 'CHMOD';
-	var $owner = 'Owner';
-	var $group = 'Group';
+	var $name     = 'Name';
+	var $size     = 'Size';
+	var $mtime    = 'Date Modified';
+	var $perms    = 'Permissions';
+	var $chmod    = 'CHMOD';
+	var $owner    = 'Owner';
+	var $group    = 'Group';
 	var $owner_id = 'Owner ID';
 	var $group_id = 'Group ID';
+	var $type     = 'Type';
+	var $ext      = 'Extension';
 	
-	var $page_generated = 'Page generated in';
-	var $seconds        = 'seconds';
+	var $timer_string = 'Page generated in %s seconds';
 	
 	
 	// Smart Date

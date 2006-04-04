@@ -17,10 +17,10 @@ $config['default_scheme'] = 'http';
 
 // process requested path
 if ( preg_match("/^(.*?)\?(.*)$/i", $_SERVER['REQUEST_URI'], $dir_url) ) {
-	$query_string = $dir_url[2];
+	# $query_string = $dir_url[2];
 	$dir_url = urldecode($dir_url[1]);
 } else {
-	$query_string = '';
+	# $query_string = '';
 	$dir_url = urldecode($_SERVER['REQUEST_URI']);
 }
 
@@ -50,7 +50,7 @@ if ( !empty($redirect) ) {
 		$scheme = parse_url($_SERVER['SCRIPT_URI']);
 		$scheme = $scheme['scheme'];
 	} else $scheme = $config['default_scheme'];
-	if( !empty($query_string) ) $query_string = '?'.$query_string;
+	if( !empty($_SERVER['QUERY_STRING']) ) $query_string = '?'.$_SERVER['QUERY_STRING'];
 	header("Location: ".$scheme.'://'.$_SERVER['HTTP_HOST'].$dir_url.$redirect.$query_string);
 	exit;
 }

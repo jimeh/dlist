@@ -8,17 +8,23 @@ BODY {
 
 #header {
 	font: 20px "Myriad Pro", "Trebuchet MS", Verdana, sans-serif;
-	padding: 15px 15px 20px 35px;
+	padding: 15px 15px 30px 30px;
 }
 
+#files {
+	
+}
+
+
+/* Details View (#list) */
 #list {
-	background-color: #777;
+	background-color: #DDD;
 	width: 100%;
 }
 
-/* List Headers */
+/* list leaders */
 #list TH {
-	background-color: #CCC;
+	background-color: #EEE;
 	padding: 2px 5px 2px 5px;
 }
 #list TH.name {
@@ -41,8 +47,12 @@ BODY {
 #list TH.owner {
 	width: 85px;
 }
+#list TH A {
+	width: 100%;
+	display: block;
+}
 
-/* List Cells */
+/* list cells */
 #list TD {
 	background-color: #FFF;
 	padding: 2px 5px 2px 5px;
@@ -62,13 +72,128 @@ BODY {
 #list TD.owner {
 	
 }
-
 #list TD.name A {
 	width: 100%;
 	display: block;
 }
 
-#stats {
+
+/* Tile view (#tiles) */
+#tiles {
+	border: 1px solid #CCC;
+	width: 100%;
+}
+#tiles UL {
+	list-style: none;
+	margin-top: 5px;
+}
+#tiles UL A {
+	color: #000;
+	text-decoration: none;
+}
+#tiles LI {
+	display: block;
+	float: left;
+	margin: 12px 12px 12px 12px;
+	width: 190px;
+	height: 70px;
+	vertical-align: top;
+}
+#tiles LI .name {
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	margin-left: 51px;
+	margin-top: 10px;
+}
+#tiles LI .info {
+	color: #999;
+	display: block;
+	font-size: 10px;
+	margin-left: 51px;
+}
+#tiles #sort-nav {
 	text-align: center;
-	padding: 10px;
+	margin: 20px 20px 0px 20px;
+}
+
+
+/* Icon view */
+#icons {
+	border: 1px solid #CCC;
+	width: 100%;
+}
+#icons UL {
+	list-style: none;
+	margin-top: 5px;
+}
+#icons UL A {
+	color: #000;
+	text-decoration: none;
+}
+#icons LI {
+	display: block;
+	float: left;
+	margin: 12px 12px 12px 12px;
+	width: 140px;
+	height: 100px;
+	text-align: center;
+	vertical-align: top;
+}
+#icons LI .name {
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	padding-top: 6px;
+	margin: 0px;
+}
+#icons LI .info {
+	color: #999;
+	display: block;
+	font-size: 10px;
+	margin: 0px;
+}
+#icons #sort-nav {
+	text-align: center;
+	margin: 20px 20px 0px 20px;
+}
+
+
+
+
+/* misc. */
+#view-nav {
+	color: #999;
+	font-size: 10px;
+	position: absolute;
+	top: 80px;
+	left: 30px;
+}
+#view-nav A {
+	color: #999;
+	font-size: 10px;
+	text-decoration: none;
+}
+
+#stats {
+	
+}
+
+#server-info {
+	color: #999;
+	padding: 3px;
+	font-style: italic;
+	font-size: 9px;
+	text-align: right;
+	position: absolute;
+	top: 77px;
+	right: 30px;
+}
+
+#timer {
+	color: #999;
+	padding: 3px;
+	font-style: italic;
+	font-size: 9px;
+	text-align: left;
 }

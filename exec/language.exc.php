@@ -22,7 +22,6 @@ Author: Jim Myhrberg
 
 //>Section> init:10
 if ( empty($config->language) ) $config->language = 'english';
-
 if ( is_readable('languages/'.$config->language.'.lang.php') ) {
 	include('languages/'.$config->language.'.lang.php');
 } elseif ( is_readable('languages/'.$config->default_lang.'.lang.php') ) {
@@ -31,7 +30,22 @@ if ( is_readable('languages/'.$config->language.'.lang.php') ) {
 	die("ERROR: Can't open language file.");
 }
 
+
+//>Section> create_object:10
 $lang = new lang();
+
+
+//>Section> warning:10
+if ( $lang->_version < $config->req_lang_ver ) {
+	echo 'WARNING: '.ucfirst($config->language).' language file is out of date and not fully compatible with this version of dList.';
+}
+
+
+//>Section> timer_string:10
+if ( stristr($lang->timer_string, '%s') != false ) $timer->pattern = $lang->timer_string;
+
+
+//>Section> setlocale:10
 setlocale(LC_ALL, array_merge($lang->_locale, $config->default_locale));
 
 

@@ -12,7 +12,7 @@
 Name: core
 Priority: 40
 Author: Jim Myhrberg
-Include: output.exc.php
+Include: output.exc.php, language.exc.php
 */
 //_SCRIPT;
 
@@ -34,18 +34,14 @@ $_SERVER['SERVER_SIGNATURE'] = $serverinfo[1].'Port '.$_SERVER['SERVER_PORT'].$s
 //>Section> define_constants:30
 define('DIR_URL', $dir_url);
 define('DIR_PATH', $dir_path);
-define('QUERY_STRING', $query_string);
-
 define('DLIST_URL', $config->dlist_url);
-define('TEMPLATE', $config->template);
-define('TPL_PATH', 'templates/'.TEMPLATE.'/');
-define('TPL_URL', DLIST_URL.TPL_PATH);
 
 
 //>Section> dynamic_vars
 $do_readdir = true;
 $do_render = true;
 $do_sort_items = true;
+$do_sort_by = $config->default_sort;
 $do_sort_reverse = false;
 
 
@@ -54,19 +50,20 @@ $do_sort_reverse = false;
 //==========================
 
 
-//>Section> readdir
+//>Section> do_readdir
 if ( $do_readdir ) {
 	//>Section> readdir.start
 	$dlist = new dirList();
 	//>Section> readdir.options
-	if ( empty($do_sort_items) ) {
-		$dlist->sort_items = false;
-	} elseif (!empty($do_sort_reverse)) $dlist->reverse = true;
+	if ( $do_sort_items ) {
+		$dlist->sort_by = $do_sort_by;
+		if ( $do_sort_reverse ) $dlist->reverse = true;
+	} else $dlist->sort_items = false;
 	if ($config->show_hidden) $dlist->show_hidden = true;
 	if ( !$config->smartdate ) $dlist->use_smartdate = false;
 	//>Section> readdir.read
 	$dlist->read(DIR_PATH);
-	//>Section> readdir.end
+	//>Section> do_readdir.end
 }
 
 //==========================
@@ -74,8 +71,6 @@ if ( $do_readdir ) {
 //==========================
 
 
-//>Section> echo
-//print_r($dlist->list);
 
 
 //_END;
