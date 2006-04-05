@@ -13,17 +13,18 @@
 	</head>
 	<body id="index">
 		<div id="header">
-			<?=$lang->index_of.' '.DIR_URL?>
+			<?=$lang->index_of.' '.Path::url2links(DIR_URL)?>
 		</div>
 		<div id="view-nav">
-			<a href="javascript:;" onclick="set_view('icons')"><?=$lang->icons?></a> | <a href="javascript:;" onclick="set_view('details')"><?=$lang->details?></a>
+			<a href="javascript:;" onclick="set_view('icons');"><?=$lang->icons?></a> | <a href="javascript:;" onclick="set_view('details');"><?=$lang->details?></a>
 		</div>
 		<div id="server-info"><?=SERVER_INFO?></div>
 		<div id="files">
 <? include(TPL_PATH.$config->tpl_mode) ?>
 		</div>
 		<div id="stats">
-			<div id="timer">Powered by dList. <?=$timer->end()?>.</div>
+			<div id="timer"><?=$lang->powered_by?>. <?=$timer->end()?>.</div>
+			<div id="lang-select"><? foreach ($installed_languages as $key => $value): ?><a href="javascript:;" onclick="set_lang('<?=$value?>')"><?=ucfirst($value)?></a><? if(count($installed_languages)-1 != $key) echo ' | '; endforeach ?></div>
 		</div>
 	</body>
 </html>

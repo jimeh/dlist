@@ -27,11 +27,18 @@ $config = array(
 	# show hidden files & folders who's names begin with . (dot)
 	'show_hidden' => false,
 	
+	# what info to show for each file/folder, valid values are:
+	# name, size, mtime, perms, chmod, owner, ownerid, group, groupid, ext
+	'fields' => 'name,size,mtime,perms,owner',
+	
 // Display settings
 	
 	# if the corresponding language file can't be found
 	# dList will default to english.
 	'language'  => 'english',
+	
+	# name of the cookie dList will check for language settings per user
+	'lang_cookie' => 'dList_language',
 	
 	# Smart Date shows relative time stamps ("Yesterday, 09:34") when applicable
 	'smartdate' => true,

@@ -1,6 +1,8 @@
 <table border="0" cellspacing="0" cellpadding="0" id="icons"><tr><td>
 <div id="sort-nav">
-	<a href="<?=Sort::get_url('name')?>"><?=$lang->name?></a> | <a href="<?=Sort::get_url('size')?>"><?=$lang->size?></a> | <a href="<?=Sort::get_url('mtime')?>"><?=$lang->mtime?></a>
+	<a href="<?=Sort::get_url('name')?>"<? if($current_sort == 'name'): ?> class="current"<? endif ?>><?=$lang->name?></a> |
+	<a href="<?=Sort::get_url('size')?>"<? if($current_sort == 'size'): ?> class="current"<? endif ?>><?=$lang->size?></a> |
+	<a href="<?=Sort::get_url('mtime')?>"<? if($current_sort == 'mtime'): ?> class="current"<? endif ?>><?=$lang->mtime?></a>
 </div>
 <ul>
 	<? if ( !$is_root ): ?>

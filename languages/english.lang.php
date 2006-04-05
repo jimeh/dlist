@@ -32,6 +32,8 @@ class lang {
 	var $icons    = 'Icons';
 	var $details  = 'Details';
 	
+	var $powered_by = 'Powered by dList';
+	
 	
 	// Smart Date
 	var $sd_tomorrow   = 'Tomorrow';

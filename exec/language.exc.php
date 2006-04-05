@@ -16,19 +16,35 @@ Author: Jim Myhrberg
 //_SCRIPT;
 
 //==========================
+//>STAGE> functions
+//==========================
+
+
+	function installed_languages () {
+		$return = glob('languages/*.lang.php');
+		foreach( $return as $key => $value ) {
+			$return[$key] = preg_replace("/languages\/(.*)\.lang\.php/", "$1", $value);
+		}
+		return $return;
+	}
+
+
+//==========================
 //>STAGE> init
 //==========================
 
 
 //>Section> init:10
-if ( empty($config->language) ) $config->language = 'english';
-if ( is_readable('languages/'.$config->language.'.lang.php') ) {
-	include('languages/'.$config->language.'.lang.php');
+if ( !empty($_REQUEST[$config->lang_cookie]) && is_readable('languages/'.$_REQUEST[$config->lang_cookie].'.lang.php')) {
+	$language = $_REQUEST[$config->lang_cookie];
+} elseif ( is_readable('languages/'.$config->language.'.lang.php') ) {
+	$language = $config->language;
 } elseif ( is_readable('languages/'.$config->default_lang.'.lang.php') ) {
-	include('languages/'.$config->default_lang.'.lang.php');
+	$language = $config->default_lang;
 } else {
 	die("ERROR: Can't open language file.");
 }
+include('languages/'.$language.'.lang.php');
 
 
 //>Section> create_object:10
@@ -57,7 +73,6 @@ setlocale(LC_ALL, array_merge($lang->_locale, $config->default_locale));
 //>After> core.define_constants
 define('LANG', $lang->_language);
 define('LANG_VER', $lang->_version);
-
 
 //==========================
 //>STAGE> main

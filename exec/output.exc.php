@@ -19,11 +19,32 @@ Author: Jim Myhrberg
 //>STAGE> functions
 //==========================
 
+//>Section> class_path.start
+class Path {
+	
+	//>Section> path.url2links
+	function url2links ($path, $root='') {
+		if ( !empty($path) ) {
+			$return = '';
+			$previous = '';
+			$path = str_replace("\\", '/', $path);
+			$path = explode('/', rtrim($path, '/'));
+			$last = count($path)-1;
+			foreach( $path as $key => $value ) {
+				$return .= ($key != $last) ? '<a href="'.$root.$previous.$value.'/">'.$value.'/</a>' : $value.'/';
+				$previous .= $value.'/';
+			}
+			return $return;
+		} else return false;
+	}
+	
+	//>Section> path_class.end
+}
 
-//>Section> sort_class.start
+//>Section> class_sort.start
 class Sort {
 	
-	//>Section> get_url
+	//>Section> sort.get_url
 	function get_url ($sortby) {
 		global $config;
 		$return = array();
@@ -84,11 +105,22 @@ $is_root = ( DIR_URL != '' && DIR_URL != '/' ) ? false : true;
 //>Section> do_render:5
 if ( $do_render ) {
 	
-//>Section> set_parent:10
+//>Section> set_vars:10
 $parent = $dlist->parent;
+if ( !empty($_REQUEST['sort']) && !empty($dlist->sort_order[strtolower($_REQUEST['sort'])]) ) {
+	$current_sort = $_REQUEST['sort'];
+} else {
+	$current_sort = $config->default_sort;
+}
+//>Section> set_fields:10
+$fields = explode(',', $config->fields);
+//foreach( $fields as $key => $value ) $fields[$key] = trim($value);
+$fields = array_flip(array_filter($fields));
+
 	
 //>Section> do_render.end:95
 }
+
 
 //_END;
 ?>

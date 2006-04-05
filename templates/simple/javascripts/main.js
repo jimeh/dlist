@@ -6,6 +6,13 @@ function set_view (view) {
 	}
 }
 
+function set_lang (lang) {
+	if (lang != readCookie('dList_language')) {
+		createCookie('dList_language', lang, 365);
+		document.location.href = '';
+	}
+}
+
 /* Cookie Related Functions */
 function createCookie(name,value,days) {
 	if (days) {

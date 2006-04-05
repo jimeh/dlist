@@ -10,6 +10,13 @@ BODY {
 	font: 20px "Myriad Pro", "Trebuchet MS", Verdana, sans-serif;
 	padding: 15px 15px 30px 30px;
 }
+#header A {
+	color: #000;
+	text-decoration: none;
+}
+#header A:hover {
+	text-decoration: underline;
+}
 
 #files {
 	
@@ -39,7 +46,7 @@ BODY {
 	width: 75px;
 }
 #list TH.mtime {
-	width: 175px;
+	width: 170px;
 }
 #list TH.perms {
 	width: 100px;
@@ -48,8 +55,10 @@ BODY {
 	width: 85px;
 }
 #list TH A {
-	width: 100%;
+	color: #000;
 	display: block;
+	width: 100%;
+	text-decoration: none;
 }
 
 /* list cells */
@@ -67,14 +76,22 @@ BODY {
 	text-align: right;
 }
 #list TD.perms {
-	
+	text-align: right;
 }
 #list TD.owner {
-	
+	text-align: right;
 }
 #list TD.name A {
-	width: 100%;
+	color: #000;
 	display: block;
+	width: 100%;
+	text-decoration: none;
+}
+#list TD.name A:hover {
+	text-decoration: underline;
+}
+#list TD.name A:visited {
+	color: #555;
 }
 
 
@@ -86,6 +103,7 @@ BODY {
 #icons UL {
 	list-style: none;
 	margin-top: 5px;
+	padding: 10px;
 }
 #icons UL A {
 	color: #000;
@@ -113,12 +131,21 @@ BODY {
 	font-size: 10px;
 	margin: 0px;
 }
-#icons #sort-nav {
+#sort-nav {
+	color: #999;
 	text-align: center;
 	margin: 20px 20px 0px 20px;
 }
-
-
+#sort-nav A {
+	color: #777;
+	text-decoration: none;
+}
+#sort-nav A:hover {
+	text-decoration: underline;
+}
+#sort-nav A.current {
+	font-weight: bold;
+}
 
 
 /* misc. */
@@ -156,4 +183,24 @@ BODY {
 	font-style: italic;
 	font-size: 9px;
 	text-align: left;
+	float: left;
 }
+
+#lang-select {
+	color: #BBB;
+	padding: 3px;
+	font-style: italic;
+	font-size: 9px;
+	float: right;
+}
+#lang-select A {
+	color: #BBB;
+	text-decoration: none;
+}
+#lang-select A:hover {
+	text-decoration: underline;
+}
+
+
+
+

@@ -32,6 +32,8 @@ class lang {
 	var $icons    = 'Ikoner';
 	var $details  = 'Detaljer';
 	
+	var $powered_by = 'Driven av dList';
+	
 	
 	// Smart Date
 	var $sd_tomorrow   = 'Imorgon';

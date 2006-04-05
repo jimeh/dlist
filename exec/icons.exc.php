@@ -24,6 +24,7 @@ class Icon {
 	
 //>Section> get_url
 	function get_url ($ext, $size, $type) {
+		//TODO enable thumbnail support using phpThumbs
 		global $config;
 		if ( $size == 'large' || $size == 'big' ) {
 			$size = $config->icons_large;

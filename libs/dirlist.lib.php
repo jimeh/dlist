@@ -53,7 +53,7 @@ class dirList {
 	// incase it might do something in the future...
 	function dirlist() {
 		// sorting orders
-		$this->sort_order = array(
+		$this->sort_order = array(
 			'name'    => 'name,mtime,size',
 			'size'    => 'size,name,mtime',
 			'mtime'   => 'mtime,name,size',
