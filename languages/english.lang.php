@@ -3,8 +3,8 @@
 class lang {
 
 	// Language settings
-	var $_language = 'english';
-	var $_version = '1.0.3';
+	var $_language = 'english'; // local language name ("svenska" for swedish)...
+	var $_version = '1.0.4';
 	
 
 	// Locale settings
@@ -28,6 +28,9 @@ class lang {
 	var $ext      = 'Extension';
 	
 	var $timer_string = 'Page generated in %s seconds';
+	
+	var $icons    = 'Icons';
+	var $details  = 'Details';
 	
 	
 	// Smart Date

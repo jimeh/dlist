@@ -3,8 +3,8 @@
 class lang {
 
 	// Language settings
-	var $_language = 'svenska';
-	var $_version = '1.0.2';
+	var $_language = 'svenska'; // local language name ("svenska" for swedish)...
+	var $_version = '1.0.4';
 	
 	
 	// Locale settings
@@ -28,6 +28,9 @@ class lang {
 	var $ext      = 'Ext'; // incorrect translation
 	
 	var $timer_string = 'Sidan genererades på %s sekunder';
+	
+	var $icons    = 'Ikoner';
+	var $details  = 'Detaljer';
 	
 	
 	// Smart Date

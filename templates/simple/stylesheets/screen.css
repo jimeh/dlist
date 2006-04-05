@@ -78,46 +78,6 @@ BODY {
 }
 
 
-/* Tile view (#tiles) */
-#tiles {
-	border: 1px solid #CCC;
-	width: 100%;
-}
-#tiles UL {
-	list-style: none;
-	margin-top: 5px;
-}
-#tiles UL A {
-	color: #000;
-	text-decoration: none;
-}
-#tiles LI {
-	display: block;
-	float: left;
-	margin: 12px 12px 12px 12px;
-	width: 190px;
-	height: 70px;
-	vertical-align: top;
-}
-#tiles LI .name {
-	display: block;
-	font-size: 12px;
-	font-weight: bold;
-	margin-left: 51px;
-	margin-top: 10px;
-}
-#tiles LI .info {
-	color: #999;
-	display: block;
-	font-size: 10px;
-	margin-left: 51px;
-}
-#tiles #sort-nav {
-	text-align: center;
-	margin: 20px 20px 0px 20px;
-}
-
-
 /* Icon view */
 #icons {
 	border: 1px solid #CCC;
