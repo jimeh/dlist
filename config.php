@@ -29,6 +29,7 @@ $config = array(
 	
 	# what info to show for each file/folder, valid values are:
 	# name, size, mtime, perms, chmod, owner, ownerid, group, groupid, ext
+	# (must contain "name", for basic directory listing functionality)
 	'fields' => 'name,size,mtime,perms,owner',
 	
 // Display settings
