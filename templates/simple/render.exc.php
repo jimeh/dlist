@@ -36,10 +36,6 @@ if ( !empty($_COOKIE['dList_simple_viewMode']) && !empty($config->tpl_modes[$_CO
 }
 
 
-//>Section> installed_languages
-$installed_languages = installed_languages();
-
-
 //>Section> include_phtml
 include(TPL_PATH.'index.phtml');
 

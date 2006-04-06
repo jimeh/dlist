@@ -114,7 +114,7 @@ if ( !empty($_REQUEST['sort']) && !empty($dlist->sort_order[strtolower($_REQUEST
 }
 //>Section> set_fields:10
 $fields = explode(',', $config->fields);
-//foreach( $fields as $key => $value ) $fields[$key] = trim($value);
+foreach( $fields as $key => $value ) $fields[$key] = trim($value);
 $fields = array_flip(array_filter($fields));
 
 	

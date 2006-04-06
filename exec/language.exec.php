@@ -15,19 +15,6 @@ Author: Jim Myhrberg
 */
 //_SCRIPT;
 
-//==========================
-//>STAGE> functions
-//==========================
-
-
-	function installed_languages () {
-		$return = glob('languages/*.lang.php');
-		foreach( $return as $key => $value ) {
-			$return[$key] = preg_replace("/languages\/(.*)\.lang\.php/", "$1", $value);
-		}
-		return $return;
-	}
-
 
 //==========================
 //>STAGE> init
@@ -50,6 +37,18 @@ include('languages/'.$language.'.lang.php');
 //>Section> create_object:10
 $lang = new lang();
 
+
+//>Section> local_names:10
+$local_names = ( is_readable($config->path_cache.'/local_names.ini') ) ? parse_ini_file($config->path_cache.'/local_names.ini') : array() ;
+$language_files = glob('languages/*.lang.php');
+$installed_languages = array();
+foreach( $language_files as $key => $value ) {
+	$lang_name = preg_replace("/languages\/(.*)\.lang\.php/", "$1", $value);
+	$installed_languages[$lang_name] = ( !empty($local_names[$lang_name]) ) ? $local_names[$lang_name] : $lang_name ;
+}
+if ( !isset($local_names[$language]) ) {
+	execHandler::write2file($config->path_cache.'/local_names.ini', "\n".$language.'='.$lang->_language, 'at');
+}
 
 //>Section> warning:10
 if ( $lang->_version < $config->req_lang_ver ) {

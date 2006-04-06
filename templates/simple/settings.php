@@ -1,10 +1,9 @@
 <?php
 
 	$config = array(
-		'icon_size' => 'small',
 		
 		# default mode
-		'mode' => 'tiles',
+		'mode' => 'icons',
 		
 		# available modes
 		'modes' => array(

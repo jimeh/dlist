@@ -24,7 +24,7 @@
 		</div>
 		<div id="stats">
 			<div id="timer"><?=$lang->powered_by?>. <?=$timer->end()?>.</div>
-			<div id="lang-select"><? foreach ($installed_languages as $key => $value): ?><a href="javascript:;" onclick="set_lang('<?=$value?>')"><?=ucfirst($value)?></a><? if(count($installed_languages)-1 != $key) echo ' | '; endforeach ?></div>
+			<div id="lang-select"><? $n = 1; foreach ($installed_languages as $key => $value): ?><a href="javascript:;" onclick="set_lang('<?=$key?>')"><?=ucfirst($value)?></a><? if(count($installed_languages) > $n) echo ' | '; $n++; endforeach ?></div>
 		</div>
 	</body>
 </html>

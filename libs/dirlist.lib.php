@@ -26,9 +26,9 @@ class dirList {
 	// Smart date formatting
 	var $use_smartdate = true;
 	var $smartdate = '{date}, {time}';
-	var $smartdate_date = '%B %d, %Y';
+	var $smartdate_date = '%B %e, %Y';
 	var $smartdate_time = '%H:%M';
-	var $standard_date_format = '%B %d, %Y, %H:%M';
+	var $standard_date_format = '%B %e, %Y, %H:%M';
 	
 
 	// Smart date language settings
@@ -53,7 +53,7 @@ class dirList {
 	// incase it might do something in the future...
 	function dirlist() {
 		// sorting orders
-		$this->sort_order = array(
+		$this->sort_order = array(
 			'name'    => 'name,mtime,size',
 			'size'    => 'size,name,mtime',
 			'mtime'   => 'mtime,name,size',

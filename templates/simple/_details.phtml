@@ -1,26 +1,22 @@
 <table border="0" cellspacing="1" cellpadding="0" id="list">
 	<tr>
 		<th class="icon"></th>
-		<? foreach ($fields as $key => $value): ?><th class="<?=$key?>"><a href="<?=Sort::get_url($key)?>"><?=$lang->$key?></a></th>
-		<? endforeach ?>
+		<? foreach ($fields as $key => $value): ?><th class="<?=$key?>"><a href="<?=Sort::get_url($key)?>"><?=$lang->$key?></a></th><? endforeach ?>
 	</tr>
-	<? if ( !$is_root ): ?>
+<? if ( !$is_root ): ?>
 	<tr>
-		<td class="icon"><a href="../" title="<?=$lang->parent_dir?>"><img src="<?=Icon::get_parent($config->tpl_icon_size)?>" class="" alt="" /></a></td>
+		<td class="icon"><a href="../" title="<?=$lang->parent_dir?>"><img src="<?=Icon::get_parent('small')?>" alt="icon" /></a></td>
 		<? foreach ($fields as $key => $value):
-		if ($key == 'name'):?><td class="name"><a href="../" title="<?=$lang->parent_dir?>">..</a></td>
-		<? else: ?><td></td><? endif ?>
-		<? endforeach ?>
+		if ($key == 'name'):?><td class="name"><a href="../" title="<?=$lang->parent_dir?>">..</a></td><? else: ?><td></td><? endif ?>
+<? endforeach ?>
 	</tr>
-	<? endif ?>
-	<? foreach ($dlist->list as $key => $item): ?>
+<? endif ?>
+<? foreach ($dlist->list as $key => $item): ?>
 	<tr>
-		<td class="icon">
-			<a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>" title="<?=$item['name']?>"><img src="<?=Icon::get_url($item['ext'], 'small', $item['type'])?>" class="" alt="" /></a>
-		</td>
+		<td class="icon"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><img src="<?=Icon::get_url($item['ext'], 'small', $item['type'])?>" alt="icon" /></a></td>
 		<? foreach ($fields as $key => $value):
 		if ($key == 'name'):?><td class="name"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a></td>
 		<? else: ?><td class="<?=$key?>"><?=$item[$key]?></td><? endif ?><? endforeach ?>
 	</tr>
-	<? endforeach ?>
+<? endforeach ?>
 </table>
