@@ -47,7 +47,7 @@ $exec->addPath(
 	array(
 		'exec/core.exec.php',
 		'exec/*.exec.php',
-		'templates/'.$config->template.'/*.exc.php',
+		'templates/'.$config->template.'/*.exec.php',
 	)
 );
 foreach( $config->path_plugins as $key => $value ) {
