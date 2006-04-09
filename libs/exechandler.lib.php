@@ -391,7 +391,7 @@ class execHandler {
 		return $file_data;
 	}
 	
-	function write2file($file, $string, $mode="wb", $lock=2){
+	function write2file($file, $string, $mode="wt", $lock=2){
 		if ( !isset($file) ) return false;
 		$fp = fopen($file, $mode);
 		if ($fp != false) {

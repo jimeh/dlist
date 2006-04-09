@@ -13,7 +13,7 @@
 <? endif ?>
 <? foreach ($dlist->list as $key => $item): ?>
 	<tr>
-		<td class="icon"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><img src="<?=Icon::get_url($item['ext'], 'small', $item['type'])?>" alt="icon" /></a></td>
+		<td class="icon"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><img src="<?=Icon::get_url($item['name'], 'small', $item['type'])?>" alt="icon" /></a></td>
 		<? foreach ($fields as $key => $value):
 		if ($key == 'name'):?><td class="name"><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a></td>
 		<? else: ?><td class="<?=$key?>"><?=$item[$key]?></td><? endif ?><? endforeach ?>

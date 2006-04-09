@@ -4,7 +4,7 @@ class lang {
 
 	// Language settings
 	var $_language = 'english'; // local language name ("svenska" for swedish)...
-	var $_version = '1.0.4';
+	var $_version = '1.0.5';
 	
 
 	// Locale settings
@@ -18,6 +18,7 @@ class lang {
 	var $name     = 'Name';
 	var $size     = 'Size';
 	var $mtime    = 'Date Modified';
+	var $atime    = 'Last Accessed';
 	var $perms    = 'Permissions';
 	var $chmod    = 'CHMOD';
 	var $owner    = 'Owner';

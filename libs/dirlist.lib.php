@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.0.6 beta
+	Class: dirList v2.0.7 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -57,6 +57,7 @@ class dirList {
 			'name'    => 'name,mtime,size',
 			'size'    => 'size,name,mtime',
 			'mtime'   => 'mtime,name,size',
+			'atime'   => 'atime,name,size',
 			'type'    => 'type,name,size,mtime',
 			'ext'     => 'ext,name,size,mtime',
 			'group'   => 'group,name,size,mtime',
@@ -97,6 +98,7 @@ class dirList {
 						foreach( $sort_by as $v ) {
 							if ( $v == 'size' ) $v = 'size_raw';
 							if ( $v == 'mtime' ) $v = 'mtime_raw';
+							if ( $v == 'atime' ) $v = 'atime_raw';
 							$list_key .= ( $v == 'size_raw' || $v == 'mtime' ) ? str_pad($item_details[$v], 28, '0', STR_PAD_LEFT).'|' : $item_details[$v].'|' ;
 						}
 						$this->list[strtolower($list_key)] = $item_details;
@@ -128,10 +130,13 @@ class dirList {
 
 	// Last Modified
 		$return['mtime_raw'] = filemtime($item);
+		$return['atime_raw'] = fileatime($item);
 		if ( $this->use_smartdate ) {
 			$return['mtime'] = $this->smartDate($return['mtime_raw'], $this->smartdate_date, $this->smartdate_time, $this->smartdate);
+			$return['atime'] = $this->smartDate($return['atime_raw'], $this->smartdate_date, $this->smartdate_time, $this->smartdate);
 		} else {
 			$return['mtime'] = date($this->standard_date_format, $return['mtime_raw']);
+			$return['atime'] = date($this->standard_date_format, $return['atime_raw']);
 		}
 	
 	// Permissions and CHMOD value

@@ -1,3 +1,4 @@
+<?php header('Content-type: text/css;'); ( empty($dir) && !empty($_REQUEST['dir']) ) ? $dir = $_REQUEST['dir'] : $dir = '' ; ?>
 BODY {
 	background-color: #FFF;
 	color: #000;
@@ -21,8 +22,7 @@ BODY {
 #files {
 	
 }
-
-
+/* <?=$dir?> */
 /* Details View (#list) */
 #list {
 	background-color: #DDD;
@@ -46,6 +46,9 @@ BODY {
 	width: 75px;
 }
 #list TH.mtime {
+	width: 170px;
+}
+#list TH.atime {
 	width: 170px;
 }
 #list TH.perms {
@@ -73,6 +76,9 @@ BODY {
 	text-align: right;
 }
 #list TD.mtime {
+	text-align: right;
+}
+#list TD.atime {
 	text-align: right;
 }
 #list TD.perms {
@@ -117,6 +123,12 @@ BODY {
 	height: 100px;
 	text-align: center;
 	vertical-align: top;
+}
+#icons LI .icon {
+	display: block;
+	padding: 0px;
+	margin: 0px;
+	height: 48px;
 }
 #icons LI .name {
 	display: block;

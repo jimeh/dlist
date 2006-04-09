@@ -12,7 +12,7 @@
 Name: core
 Priority: 40
 Author: Jim Myhrberg
-Include: output.exc.php, language.exc.php
+Include: language.exc.php, output.exc.php
 */
 //_SCRIPT;
 

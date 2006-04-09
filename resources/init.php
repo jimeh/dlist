@@ -31,8 +31,12 @@ if(!preg_match("/\/$/", $dir_url)) $redirect = '/';
 if ( empty($redirect) ) {
 	
 	// path lookup
-	$dir_path = apache_lookup_uri($dir_url);
-	$dir_path = ( is_array($dir_path) ) ? $dir_path['filename'] : $dir_path->filename ;
+	if ( function_exists('apache_lookup_uri') ) {
+		$dir_path = apache_lookup_uri($dir_url);
+		$dir_path = ( is_array($dir_path) ) ? $dir_path['filename'] : $dir_path->filename ;
+	} else {
+		$dir_path = $_SERVER['DOCUMENT_ROOT'].$dir_url;
+	}
 	if(!preg_match("/\/$/", $dir_path)) $dir_path .= '/';
 	
 	// check for index files and redirect if found

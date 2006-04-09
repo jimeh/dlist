@@ -4,7 +4,7 @@ class lang {
 
 	// Language settings
 	var $_language = 'svenska'; // local language name ("svenska" for swedish)...
-	var $_version = '1.0.4';
+	var $_version = '1.0.5';
 	
 	
 	// Locale settings
@@ -18,6 +18,7 @@ class lang {
 	var $name = 'Namn';
 	var $size = 'Storlek';
 	var $mtime = 'Datum Ändrad';
+	var $atime = 'Sisst Öppnad'; //FIXME possibly incorrect
 	var $perms = 'Rättigheter';
 	var $chmod = 'CHMOD';
 	var $owner = 'Ägare';
@@ -25,7 +26,7 @@ class lang {
 	var $owner_id = 'Ägare ID';
 	var $group_id = 'Grupp ID';
 	var $type     = 'Typ';
-	var $ext      = 'Ext'; // incorrect translation
+	var $ext      = 'Ext'; //FIXME incorrect translation
 	
 	var $timer_string = 'Sidan genererades på %s sekunder';
 	

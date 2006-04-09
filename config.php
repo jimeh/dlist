@@ -27,9 +27,9 @@ $config = array(
 	# show hidden files & folders who's names begin with . (dot)
 	'show_hidden' => false,
 	
-	# what info to show for each file/folder, valid values are:
+	# what info to show for each file/folder in details view, valid values are:
 	# name, size, mtime, perms, chmod, owner, ownerid, group, groupid, ext
-	# (must contain "name", for basic directory listing functionality)
+	# (must at least contain "name" for basic directory listing functionality)
 	'fields' => 'name,size,mtime,perms,owner',
 	
 // Display settings
@@ -59,7 +59,7 @@ $config = array(
 	'path_plugins' => array('plugins'),
 	'path_cache' => 'cache',
 
-	'req_lang_ver' => '1.0.2',
+	'req_lang_ver' => '1.0.5',
 	
 
 	

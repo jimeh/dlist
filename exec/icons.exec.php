@@ -23,18 +23,20 @@ Author: Jim Myhrberg
 class Icon {
 	
 //>Section> get_url
-	function get_url ($ext, $size, $type) {
-		//TODO enable thumbnail support using phpThumbs
+	function get_url ($file, $size, $type, $thumbnail=false) {
 		global $config;
 		if ( $size == 'large' || $size == 'big' ) {
 			$size = $config->icons_large;
 		} else {
 			$size = $config->icons_small;
 		}
+		$ext = ( preg_match("/.*\.(.*)/", $file, $ext) ) ? $ext[1] : '' ;
 		$icons_path = ICONS_PATH.$size.'/';
 		$icons_url = ICONS_URL.$size.'/';
 		if ( $type == 'file' ) {
-			if ( file_exists($icons_path.$ext.$config->icons_ext) ) {
+			if ( preg_match("/jpg|jpeg|png/", $ext) && $thumbnail ) {
+				return DLIST_URL.'thumb.php?src='.urlencode(DIR_URL.$file).'&w=48&h=48';
+			} elseif ( file_exists($icons_path.$ext.$config->icons_ext) ) {
 				return $icons_url.$ext.$config->icons_ext;
 			} else {
 				return $icons_url.'_file'.$config->icons_ext;
@@ -57,6 +59,16 @@ class Icon {
 			$size = $config->icons_small;
 		}
 		return ICONS_URL.$size.'/_parent'.$config->icons_ext;
+	}
+	
+//>Section> is_image
+	function is_image ($file) {
+		if ( preg_match("/.*\.(jpg|jpeg|png|gif|bmp)/", $file) ) {
+			return true;
+		} elseif ( preg_match("/jpg|jpeg|png|gif|bmp/", $file) ) {
+			return true;
+		}
+		return false;
 	}
 //> class.end
 }
