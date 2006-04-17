@@ -34,8 +34,8 @@ class Icon {
 		$icons_path = ICONS_PATH.$size.'/';
 		$icons_url = ICONS_URL.$size.'/';
 		if ( $type == 'file' ) {
-			if ( preg_match("/jpg|jpeg|png/", $ext) && $thumbnail ) {
-				return DLIST_URL.'thumb.php?src='.urlencode(DIR_URL.$file).'&w=48&h=48';
+			if ( preg_match("/jpg|jpeg|jpe|png/i", $ext) && $thumbnail && $config->thumbnails ) {
+				return DLIST_URL.'thumb.php?src='.rawurlencode(DIR_URL.$file).'&w=48&h=48';
 			} elseif ( file_exists($icons_path.$ext.$config->icons_ext) ) {
 				return $icons_url.$ext.$config->icons_ext;
 			} else {

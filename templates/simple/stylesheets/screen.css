@@ -1,10 +1,13 @@
-<?php header('Content-type: text/css;'); ( empty($dir) && !empty($_REQUEST['dir']) ) ? $dir = $_REQUEST['dir'] : $dir = '' ; ?>
 BODY {
 	background-color: #FFF;
 	color: #000;
 	font: 11px "Lucida Grande", Tahoma, Verdana, sans-serif;
 	margin: 0xp;
 	padding: 18px;
+}
+
+IMG {
+	border-style: none;
 }
 
 #header {
@@ -19,10 +22,22 @@ BODY {
 	text-decoration: underline;
 }
 
+#stats {
+	color: #BBB;
+	padding: 3px;
+/*	font-style: italic;*/
+	font-size: 9px;
+	text-align: right;
+	position: absolute;
+	top: 97px;
+	right: 30px;
+}
+
 #files {
 	
 }
-/* <?=$dir?> */
+
+
 /* Details View (#list) */
 #list {
 	background-color: #DDD;
@@ -118,7 +133,7 @@ BODY {
 #icons LI {
 	display: block;
 	float: left;
-	margin: 12px 12px 12px 12px;
+	margin: 8px;
 	width: 140px;
 	height: 100px;
 	text-align: center;
@@ -174,10 +189,6 @@ BODY {
 	text-decoration: none;
 }
 
-#stats {
-	
-}
-
 #server-info {
 	color: #999;
 	padding: 3px;
@@ -212,7 +223,4 @@ BODY {
 #lang-select A:hover {
 	text-decoration: underline;
 }
-
-
-
 

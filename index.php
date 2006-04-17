@@ -2,7 +2,7 @@
 
 /*
 	
-	dList v2.2.0 beta
+	dList v2.2.3 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -51,7 +51,7 @@ $exec->addPath(
 	)
 );
 foreach( $config->path_plugins as $key => $value ) {
-	$exec->addPath($value.'/*.exc.php');
+	$exec->addPath($value.'/*.exec.php');
 }
 $exec->cache();
 include($exec->include_file);

@@ -1,3 +1,4 @@
+<div id="stats"><?=Path::stats($dlist->stats_files, $dlist->stats_folders, $dlist->stats_totalsize)?></div>
 <table border="0" cellspacing="0" cellpadding="0" id="icons"><tr><td>
 <div id="sort-nav">
 	<a href="<?=Sort::get_url('name')?>"<? if($current_sort == 'name'): ?> class="current"<? endif ?>><?=$lang->name?></a> |
@@ -9,7 +10,7 @@
 <li><a href="../"><p class="icon"><img src="<?=Icon::get_parent('large')?>" alt="" /></p><p class="name">..</p><p class="info"><?=$lang->parent_dir?></p></a></li>
 	<? endif ?>
 	<? foreach ($dlist->list as $key => $item): $info = ($item['type'] == 'file') ? $item['size'] : $item['mtime'] ;?>
-<li><a href="<?=DIR_URL.$item['name']?><? if($item['type'] == 'dir') echo '/'; ?>"><p class="icon"><img src="<?=Icon::get_url($item['name'], 'large', $item['type'], true)?>" alt="" /></p><p class="name"><?=$item['name']?></p><p class="info"><?=$info?></p></a></li>
+<li><a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>"><p class="icon"><img src="<?=Icon::get_url($item['name'], 'large', $item['type'], true)?>" alt="" /></p><p class="name"><?=Path::wordbreak($item['name'], 16, "\n", 1)?></p><p class="info"><?=$info?></p></a></li>
 	<? endforeach ?>
 </ul>	
 </td></tr></table>

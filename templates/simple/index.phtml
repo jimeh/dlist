@@ -4,8 +4,9 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 		<title><?=$lang->index_of.' '.DIR_URL?></title>
+		<link rel="stylesheet" href="<?=TPL_URL?>stylesheets/css.php?src=screen.css&dir=<?=TPL_URL?>" type="text/css" media="screen" title="screen" charset="utf-8" />
 		<script src="<?=TPL_URL?>javascripts/main.js" type="text/javascript" language="javascript" charset="utf-8"></script>
-		<link rel="stylesheet" href="<?=TPL_URL?>stylesheets/screen.css.php?dir=<?=TPL_URL?>" type="text/css" media="screen" title="screen" charset="utf-8" />
+<!-- 		<script src="<?=TPL_URL?>javascripts/overlib_mini.js" type="text/javascript" language="javascript" charset="utf-8"></script> -->
 	</head>
 	<body id="index">
 		<div id="header">
@@ -18,9 +19,7 @@
 		<div id="files">
 <? include(TPL_PATH.$config->tpl_mode) ?>
 		</div>
-		<div id="stats">
-			<div id="timer"><?=$lang->powered_by?>. <?=$timer->end()?>.</div>
-			<div id="lang-select"><? $n = 1; foreach ($installed_languages as $key => $value): ?><a href="javascript:;" onclick="set_lang('<?=$key?>')"><?=ucfirst($value)?></a><? if(count($installed_languages) > $n) echo ' | '; $n++; endforeach ?></div>
-		</div>
+		<div id="timer"><?=$lang->powered_by?>. <?=$timer->end()?>.</div>
+		<div id="lang-select"><? $n = 1; foreach ($installed_languages as $key => $value): ?><a href="javascript:;" onclick="set_lang('<?=$key?>')"><?=ucfirst($value)?></a><? if(count($installed_languages) > $n) echo ' | '; $n++; endforeach ?></div>
 	</body>
 </html>

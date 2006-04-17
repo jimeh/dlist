@@ -38,6 +38,45 @@ class Path {
 		} else return false;
 	}
 	
+	//>Section> path.stats
+	function stats ($files=0, $folders=0, $totalsize=false) {
+		global $lang;
+		if ( !empty($folders) ) {
+			$r_folders = ( $folders > 1 ) ? str_replace('%n', $folders, $lang->stats_folders) : str_replace('%n', $folders, $lang->stats_folder) ;
+		}
+		if ( !empty($files) ) {
+			$r_files = ( $files > 1 ) ? str_replace('%n', $files, $lang->stats_files) : str_replace('%n', $files, $lang->stats_file) ;
+			if ( !empty($totalsize) ) {
+				$r_files = str_replace('%f', $r_files, $lang->stats_totalsize);
+				$r_files = str_replace('%s', $totalsize, $r_files);
+			}
+		}
+		if ( !empty($r_folders) && !empty($r_files) ) {
+			$return = str_replace('%d', $r_folders, $lang->stats_template);
+			return str_replace('%f', $r_files, $return);
+		} elseif ( !empty($r_folders) ) {
+			return $r_folders;
+		} elseif ( !empty($r_files) ) {
+			return $r_files;
+		}
+	}
+	
+	//>Section> path_wordwrap
+	function wordbreak ($input, $length, $break=" ") {
+		if (preg_match("/(.*)\.(.*)/", $input, $preg) ) {
+			$words = explode(' ', $preg[1]);
+			$ext = '.'.$preg[2];
+		} else {
+			$words = explode(' ', $input);
+			$ext = '';
+		}
+		
+		foreach( $words as $key => $value ) {
+			$words[$key] = wordwrap($value, $length, $break, 1);
+		}
+		return implode(' ', $words).$ext;
+	}
+	
 	//>Section> path_class.end
 }
 

@@ -52,8 +52,10 @@ $do_sort_reverse = false;
 
 //>Section> do_readdir
 if ( $do_readdir ) {
+	
 	//>Section> readdir.start
 	$dlist = new dirList();
+	
 	//>Section> readdir.options
 	if ( $do_sort_items ) {
 		$dlist->sort_by = $do_sort_by;
@@ -61,15 +63,25 @@ if ( $do_readdir ) {
 	} else $dlist->sort_items = false;
 	if ($config->show_hidden) $dlist->show_hidden = true;
 	if ( !$config->smartdate ) $dlist->use_smartdate = false;
+	$dlist->dir_url = DIR_URL;
+	
+	//>Section> readdir.filter_out
+	if ( !empty($config->filter_out) ) $dlist->filter_out = '/'.implode('|', $config->filter_out).'/i';
+	
+	//>Section> readdir.hide_self
+	$alt_string = ( empty($config->alt_urls) ) ? '' : '|^'.str_replace('/', '\/', implode('$|^', $config->alt_urls)).'$' ;
+	$dlist->hide_self = '/^'.str_replace('/', '\/', DLIST_URL).'$'.$alt_string.'/i';
+	
 	//>Section> readdir.read
 	$dlist->read(DIR_PATH);
+	
 	//>Section> do_readdir.end
+	
 }
 
 //==========================
 //>STAGE> render
 //==========================
-
 
 
 

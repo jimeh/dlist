@@ -59,7 +59,7 @@ class imageThumb {
 	}
 
 	function load ($file) {
-		if ( is_readable($file) && preg_match("/.*\.(jpg|jpeg|png)/i", $file, $type) ) {
+		if ( is_readable($file) && preg_match("/.*\.(jpg|jpeg|jpe|png)/i", $file, $type) ) {
 			$this->type = $type = $type[1];
 			$this->image = ( $type == 'png' ) ? imagecreatefrompng($file) : imagecreatefromjpeg($file) ;
 			$this->src_file = $file;
@@ -104,9 +104,9 @@ class imageThumb {
 	function save_to_cache () {
 		if ( !preg_match("/\/$/", $this->cache_dir) ) $this->cache_dir .= '/';
 		if ( is_writable($this->cache_dir) ) {
-			$filename = 'imgt_';
 			$string = $this->src_file.$this->last_modified;
 			if ( !empty($this->target_w) && !empty($this->target_h)) $string .= $this->target_w.$this->target_h;
+			$filename = 'imgt_';
 			$filename .= md5($string);
 			$filename .= '.'.$this->type;
 			if( !file_exists($filename) ) {
@@ -121,16 +121,20 @@ class imageThumb {
 	
 	function check_cache ($file, $target_w=null, $target_h=null) {
 		if ( is_readable($file) ) {
-			$ext = preg_replace("/.*\.(.*)/", "$1", $file);
-			$filename = 'imgt_';
+			preg_match("/(?:.*\/|)(.*?)\.(.*)/i", $file, $file_pieces);
+			$ext = $file_pieces[2];
 			$string = $file.filemtime($file);
 			if ( !empty($target_w) && !empty($target_h) ) $string .= $target_w.$target_h;
+			$filename = 'imgt_';
 			$filename .= md5($string);
 			$filename .= '.'.$ext;
 			if ( is_readable($this->cache_dir.$filename) ) {
+				//TODO possibly redirect instead of loading image in script
+ 				// header('Location: '.dirname($_SERVER['SCRIPT_URL']).'/'.$this->cache_dir.$filename);
+ 				// return true;
 				( $ext == 'png' ) ? header('Content-type: image/png') : header('Content-type: image/jpeg');
-				header('Content-disposition: image; filename="'.basename($this->src_file).'"');
-				echo $this->rfile($this->cache_dir.$filename);
+				header('Content-disposition: image; filename="'.$file_pieces[1].'_thumb.'.$file_pieces[2].'"');
+				print($this->rfile($this->cache_dir.$filename));
 				return true;
 			}
 		}

@@ -49,6 +49,7 @@ foreach( $language_files as $key => $value ) {
 if ( !isset($local_names[$language]) ) {
 	execHandler::write2file($config->path_cache.'/local_names.ini', "\n".$language.'='.$lang->_language, 'at');
 }
+// sort($installed_languages);
 
 //>Section> warning:10
 if ( $lang->_version < $config->req_lang_ver ) {
@@ -79,11 +80,17 @@ define('LANG_VER', $lang->_version);
 
 
 //>After> core.readdir.options
+//TODO add date formatting options to language files
 $dlist->lang_tomorrow = $lang->sd_tomorrow;
 $dlist->lang_today = $lang->sd_today;
 $dlist->lang_yesterday = $lang->sd_yesterday;
 $dlist->lang_2_days_ago = $lang->sd_2_days_ago;
 $dlist->lang_3_days_ago = $lang->sd_3_days_ago;
+
+if ( !empty($lang->standard_date_format) ) $dlist->standard_date_format = $lang->standard_date_format;
+if ( !empty($lang->sd_format) ) $dlist->smartdate = $lang->sd_format;
+if ( !empty($lang->sd_date) ) $dlist->smartdate_date = $lang->sd_date;
+if ( !empty($lang->sd_time) ) $dlist->smartdate_time = $lang->sd_time;
 
 
 

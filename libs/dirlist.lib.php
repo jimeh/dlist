@@ -4,17 +4,34 @@ class dirList {
 
 /*
 
-	Class: dirList v2.0.7 beta
+	Class: dirList v2.0.9 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
 
 */
 	
+	
 	// General settings
 	var $sort_by = 'name';
 	var $folders_first = true;
 	var $show_hidden = false;
+	
+	
+	// Filtering
+	
+	# use regular expressions to match file & folders to hide
+	# intended for dynamic changes from config files and more
+	var $filter_out = '';
+	
+	# used by filtering to match whole directory structures
+	# but needs to be set manually for now.
+	var $dir_url = '';
+	
+	# regular expressions used to hide the script itself,
+	# same as filter_out, but not intended to be modifed by
+	# plugins and other means.
+	var $hide_self = false;
 	
 
 	// Sorting
@@ -25,10 +42,10 @@ class dirList {
 
 	// Smart date formatting
 	var $use_smartdate = true;
+	var $standard_date_format = '%B %e, %Y, %H:%M';
 	var $smartdate = '{date}, {time}';
 	var $smartdate_date = '%B %e, %Y';
 	var $smartdate_time = '%H:%M';
-	var $standard_date_format = '%B %e, %Y, %H:%M';
 	
 
 	// Smart date language settings
@@ -47,10 +64,10 @@ class dirList {
 	var $stats_count = 0;
 	var $stats_files = 0;
 	var $stats_folders = 0;
-	var $stats_totalsize = 0;
+	var $stats_totalsize_raw = 0;
+	var $stats_totalsize;
 	
-	// Construtor - does nothing, but is here just
-	// incase it might do something in the future...
+	// Construtor
 	function dirlist() {
 		// sorting orders
 		$this->sort_order = array(
@@ -81,13 +98,12 @@ class dirList {
 		if($dh = @opendir($dir)) {
 			$this->parent = $this->getDetails($dir);
 			while(false !== ($item = readdir($dh))) {
-				$hidden_item = ( $this->show_hidden ) ? false : preg_match("/^\./", $item) ;
-				if( ($item != '.' && $item != '..') && !$hidden_item ) {
+				if( $this->show_item($item) ) {
 					$item_details  = $this->getDetails($dir.$item);
 					// stats
 					$this->stats_count++;
 					if ( $item_details['type'] == 'file' ) {
-						$this->stats_totalsize += $item_details['size_raw'];
+						$this->stats_totalsize_raw += $item_details['size_raw'];
 						$this->stats_files++;
 					} else {
 						$this->stats_folders++;
@@ -99,7 +115,13 @@ class dirList {
 							if ( $v == 'size' ) $v = 'size_raw';
 							if ( $v == 'mtime' ) $v = 'mtime_raw';
 							if ( $v == 'atime' ) $v = 'atime_raw';
-							$list_key .= ( $v == 'size_raw' || $v == 'mtime' ) ? str_pad($item_details[$v], 28, '0', STR_PAD_LEFT).'|' : $item_details[$v].'|' ;
+							if ( $v == 'name' ) {
+								$list_key .= $this->process_filename_for_sorting($item_details[$v]).'|';
+							} elseif ( $v == 'size_raw' || $v == 'mtime' || $v == 'atime' ) {
+								$list_key .= str_pad($item_details[$v], 28, '0', STR_PAD_LEFT).'|';
+							} else {
+								$list_key .= $item_details[$v].'|';
+							}
 						}
 						$this->list[strtolower($list_key)] = $item_details;
 					} else {
@@ -110,6 +132,7 @@ class dirList {
 			if ( $this->sort_items ) {
 				( $this->reverse ) ? krsort($this->list) : ksort($this->list) ;
 			}
+			$this->stats_totalsize = $this->format_filesize($this->stats_totalsize_raw);
 			return true;
 		}else{ $this->error = true; return false; }
 		closedir($dh);
@@ -119,6 +142,26 @@ class dirList {
 // ==============================================
 //	----- [ Internal Functions ] -----------------
 // ==============================================
+
+	function show_item ($item) {
+		$hidden_item = ( $this->show_hidden ) ? false : preg_match("/^\./", $item) ;
+		$filter_out = ( empty($this->filter_out) ) ? false : preg_match($this->filter_out, $this->dir_url.$item) ;
+		$hide_self = ( empty($this->hide_self) ) ? false : preg_match($this->hide_self, $this->dir_url.$item) ;
+		if ( $item != '.' && $item != '..' && !$hidden_item && !$filter_out && !$hide_self ) return true;
+		return false;
+	}
+
+	function process_filename_for_sorting ($input) {
+		if ( preg_match_all("/(.*?)([0-9]+)/i", $input, $preg) ) {
+			$foot = preg_replace("/^.*[0-9]+(\D*?)$/", "$1", $input);
+			$newstring = '';
+			foreach( $preg[1] as $key => $value ) {
+				$newstring .= $value.str_pad($preg[2][$key], 6, '0', STR_PAD_LEFT);
+			}
+			return $newstring.$foot;
+		}
+		return $input;
+	}
 
 	function getDetails ($item) {
 		$item = str_replace("\\", '/', $item);

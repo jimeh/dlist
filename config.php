@@ -15,10 +15,16 @@ $config = array(
 	# leave blank to autodetect from $_SERVER['SCRIPT_NAME']
 	'dlist_url' => '',
 	
-	# show debug messages, for exechandler to always re-parse all files
+	# if dlist is accessable from multiple urls (installed in /dev/dlist/,
+	# but also accessable via /dlist/ thanks to an alias) please specify
+	# the real path(s) here as array keys
+	'alt_urls' => array('/dev/dlist'),
+	
+	# show debug messages, exechandler to always re-parse all files
 	'debug'     => true,
 	
-	# by default dList will sort by this
+	# by default dList will sort by this, for more details, 
+	# check the dirlist function in libs/dirlist.lib.php
 	'default_sort' => 'name',
 	
 
@@ -27,8 +33,12 @@ $config = array(
 	# show hidden files & folders who's names begin with . (dot)
 	'show_hidden' => false,
 	
+	# use regular expressions to filter out specific files and folders from
+	# being displayed, and browseable
+	'filter_out' => array(),
+	
 	# what info to show for each file/folder in details view, valid values are:
-	# name, size, mtime, perms, chmod, owner, ownerid, group, groupid, ext
+	# name, size, mtime, atime, perms, chmod, owner, ownerid, group, groupid, ext
 	# (must at least contain "name" for basic directory listing functionality)
 	'fields' => 'name,size,mtime,perms,owner',
 	
@@ -38,11 +48,14 @@ $config = array(
 	# dList will default to english.
 	'language'  => 'english',
 	
-	# name of the cookie dList will check for language settings per user
-	'lang_cookie' => 'dList_language',
+	# show thumbnails for JPEG and PNG images?
+	'thumbnails' => true,
 	
 	# Smart Date shows relative time stamps ("Yesterday, 09:34") when applicable
 	'smartdate' => true,
+	
+	# name of the cookie dList will check for language settings per user
+	'lang_cookie' => 'dList_language',
 	
 
 // Template & Icon settings
@@ -59,7 +72,7 @@ $config = array(
 	'path_plugins' => array('plugins'),
 	'path_cache' => 'cache',
 
-	'req_lang_ver' => '1.0.5',
+	'req_lang_ver' => '1.0.7',
 	
 
 	
