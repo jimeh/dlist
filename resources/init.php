@@ -17,10 +17,8 @@ $config['default_scheme'] = 'http';
 
 // process requested path
 if ( preg_match("/^(.*?)\?(.*)$/i", $_SERVER['REQUEST_URI'], $dir_url) ) {
-	# $query_string = $dir_url[2];
 	$dir_url = urldecode($dir_url[1]);
 } else {
-	# $query_string = '';
 	$dir_url = urldecode($_SERVER['REQUEST_URI']);
 }
 

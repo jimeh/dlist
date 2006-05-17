@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.0.9 beta
+	Class: dirList v2.1.1 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -23,6 +23,10 @@ class dirList {
 	# use regular expressions to match file & folders to hide
 	# intended for dynamic changes from config files and more
 	var $filter_out = '';
+	
+	# use regular expressions to match file & folders to show
+	# regardless of other filtering patterns
+	var $filter_show = '';
 	
 	# used by filtering to match whole directory structures
 	# but needs to be set manually for now.
@@ -98,7 +102,7 @@ class dirList {
 		if($dh = @opendir($dir)) {
 			$this->parent = $this->getDetails($dir);
 			while(false !== ($item = readdir($dh))) {
-				if( $this->show_item($item) ) {
+				if( $this->show_item($item, $dir) ) {
 					$item_details  = $this->getDetails($dir.$item);
 					// stats
 					$this->stats_count++;
@@ -143,11 +147,13 @@ class dirList {
 //	----- [ Internal Functions ] -----------------
 // ==============================================
 
-	function show_item ($item) {
+	function show_item ($item, $dir='') {
+		if ( !is_readable($dir.$item) ) return false;
 		$hidden_item = ( $this->show_hidden ) ? false : preg_match("/^\./", $item) ;
 		$filter_out = ( empty($this->filter_out) ) ? false : preg_match($this->filter_out, $this->dir_url.$item) ;
+		$filter_show = ( empty($this->filter_show) ) ? false : !preg_match($this->filter_show, $this->dir_url.$item) ;
 		$hide_self = ( empty($this->hide_self) ) ? false : preg_match($this->hide_self, $this->dir_url.$item) ;
-		if ( $item != '.' && $item != '..' && !$hidden_item && !$filter_out && !$hide_self ) return true;
+		if ( $item != '.' && $item != '..' && !$hidden_item && !$filter_out && !$filter_show && !$hide_self ) return true;
 		return false;
 	}
 
