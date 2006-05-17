@@ -2,7 +2,7 @@
 
 /*
 	
-	dList v2.2.3 beta
+	dList v2.2.4 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
