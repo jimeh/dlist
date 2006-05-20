@@ -5,7 +5,10 @@ class speedometer {
 /*
 
 	Class: Speedometer v0.2
-	Created to simplify script execution statistics...
+	Created to simplify script execution statistics & debugging...
+	
+	Copyright © 2006 Jim Myhrberg. All rights reserved.
+	zynode@gmail.com
 
 */
 	
