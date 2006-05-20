@@ -36,6 +36,7 @@ if ( !empty($_COOKIE['dList_simple_viewMode']) && !empty($config->tpl_modes[$_CO
 }
 
 
+
 //>Section> include_phtml
 include(TPL_PATH.'index.phtml');
 

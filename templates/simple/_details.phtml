@@ -1,7 +1,9 @@
 <table border="0" cellspacing="1" cellpadding="0" id="list">
 	<tr>
 		<th class="icon"></th>
-		<? foreach ($fields as $key => $value): ?><th class="<?=$key?>"><a href="<?=Sort::get_url($key)?>"><?=$lang->$key?></a></th><? endforeach ?>
+		<? foreach ($fields as $key => $value):
+		$reverse = ($key == 'mtime') ? true : false;
+		 ?><th class="<?=$key?>"><a href="<?=Sort::get_url($key, $reverse)?>"><?=$lang->$key?></a></th><? endforeach ?>
 	</tr>
 <? if ( !$is_root ): ?>
 	<tr>

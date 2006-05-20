@@ -4,7 +4,7 @@ class execHandler {
 	
 /*
 	
-	Class: execHandler v0.7.5 beta
+	Class: execHandler v0.7.6 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -155,16 +155,18 @@ class execHandler {
 					.= "\n\n//==========================\n// Stage: ".$stage.":".$stage_priority."\n//==========================\n";
 				$new_stage = true;
 			}
-			foreach( $this->execution_order[$stage] as $key => $code ) {
-				if( $this->debug ) {
-					$pr = explode('|', $key, 2);
-					$pr = $pr[0];
-					$this->compiled_code
-							.= ( $new_stage ) ? "\n// Section: ".$code.":".$pr."\n" : "\n\n// Section: ".$code.":".$pr."\n" ;
-					$this->compiled_code .= $this->clean_up_code($this->code[$stage][$code]);
-					$new_stage = false;
-				} else {
-					$this->compiled_code .= $this->code[$stage][$code];
+			if ( !empty($this->execution_order[$stage]) ) {
+				foreach( $this->execution_order[$stage] as $key => $code ) {
+					if( $this->debug ) {
+						$pr = explode('|', $key, 2);
+						$pr = $pr[0];
+						$this->compiled_code
+								.= ( $new_stage ) ? "\n// Section: ".$code.":".$pr."\n" : "\n\n// Section: ".$code.":".$pr."\n" ;
+						$this->compiled_code .= $this->clean_up_code($this->code[$stage][$code]);
+						$new_stage = false;
+					} else {
+						$this->compiled_code .= $this->code[$stage][$code];
+					}
 				}
 			}
 		}

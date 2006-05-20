@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.1.1 beta
+	Class: dirList v2.1.2 beta
 	
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com
@@ -172,6 +172,7 @@ class dirList {
 	function getDetails ($item) {
 		$item = str_replace("\\", '/', $item);
 		$return['name'] = basename($item);
+		$return['name'] = preg_replace('/.*(?:\/|\\\\)(.*?)$/i', "$1", $item);
 
 	// Owner and Group
 		if ( ($group = $this->getGroup($item)) != false ) $return = array_merge($return, $group);

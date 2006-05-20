@@ -4,7 +4,7 @@ class imageThumb {
 	
 /*
 
-	Class: image v0.2 beta
+	Class: imageThumb v0.2 beta
 
 	Copyright © 2006 Jim Myhrberg. All rights reserved.
 	zynode@gmail.com

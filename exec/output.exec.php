@@ -84,7 +84,7 @@ class Path {
 class Sort {
 	
 	//>Section> sort.get_url
-	function get_url ($sortby) {
+	function get_url ($sortby, $desc=false) {
 		global $config;
 		$return = array();
 		$current_sort = ( empty($_REQUEST['sort']) ) ? $config->default_sort : $_REQUEST['sort'] ;
@@ -97,6 +97,7 @@ class Sort {
 		} else {
 			if ($sortby != $config->default_sort) {
 				$return[] = 'sort='.$sortby;
+				if ( $desc == true ) $return[] = 'order=desc';
 			}
 		}
 		
