@@ -4,10 +4,26 @@ class execHandler {
 	
 /*
 	
-	Class: execHandler v0.7.6 beta
+	Class: execHandler v0.7.7 beta
 	
-	Copyright © 2006 Jim Myhrberg. All rights reserved.
+	Copyright © 2006 Jim Myhrberg.
 	zynode@gmail.com
+	
+	----------
+	This program is free software; you can redistributeit and/or modify it
+	under the terms of the GNU General Public License as published by the Free
+	Software Foundation; either version 2 of the License, or (at your option)
+	any later version.
+
+	This program is distributed in the hope that it will be useful, but WITHOUT
+	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+	FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+	more details.
+
+	You should have received a copy of the GNU General Public License along
+	with this program; if not, write to the Free Software Foundation, Inc., 59
+	Temple Place, Suite 330, Boston, MA 02111-1307 USA
+	----------
 
 */
 
@@ -122,7 +138,10 @@ class execHandler {
 	function addPath ($input) {
 		$result = array();
 		if ( is_array($input) ) {
-			foreach( $input as $key => $value ) $result = array_merge($result, glob($value));
+			foreach( $input as $key => $value ) {
+				$glob = glob($value);
+				if (is_array($glob)) $result = array_merge($result, $glob);
+			}
 		} elseif( is_string($input) ) {
 			$result = glob($input);
 		}

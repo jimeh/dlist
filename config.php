@@ -50,6 +50,7 @@ $config = array(
 	
 	# show thumbnails for JPEG and PNG images?
 	'thumbnails' => true,
+	'thumb_pattern' => '/jpg|jpeg|jpe|png$/i',
 	
 	# Smart Date shows relative time stamps ("Yesterday, 09:34") when applicable
 	'smartdate' => true,
@@ -60,7 +61,7 @@ $config = array(
 
 // Template & Icon settings
 
-	'template'       => 'simple',
+	'template'       => 'slik',
 	'iconset'        => 'osx',
 	'allow_override' => true,
 	
@@ -72,7 +73,7 @@ $config = array(
 	'path_plugins' => array('plugins'),
 	'path_cache' => 'cache',
 
-	'req_lang_ver' => '1.0.7',
+	'req_lang_ver' => '1.0.8',
 	
 
 	
