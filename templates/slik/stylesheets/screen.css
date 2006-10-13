@@ -549,6 +549,13 @@ A:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 }
+.pop-text .name {
+	border-bottom: 1px solid #DDD;
+	padding-bottom: 2px;
+	margin-bottom: 2px;
+	font-weight: bold;
+	text-align: center;
+}
 .preview {
 	border-top: 1px solid #DDD;
 	margin-top: 4px;
