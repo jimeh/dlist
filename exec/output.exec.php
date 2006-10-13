@@ -51,7 +51,13 @@ class Path {
 			$path = explode('/', rtrim($path, '/'));
 			$last = count($path)-1;
 			foreach( $path as $key => $value ) {
-				$return .= ($key != $last) ? '<a href="'.$root.$previous.$value.'/" title="'.$root.$previous.$value.'/">'.$value.'/</a>' : $value.'/';
+				if ( $key != $last ) {
+					$return .= '<a href="'.$root.$previous.$value.'/" title="'.$root.$previous.$value.'/">'.$value;
+					$return .= ( $value != '' ) ? '</a>/' : '/</a>' ;
+				} else {
+					$return .= $value.'/';
+				}
+				// $return .= ($key != $last) ? '<a href="'.$root.$previous.$value.'/" title="'.$root.$previous.$value.'/">'.$value.'</a>/' : $value.'/';
 				$previous .= $value.'/';
 			}
 			return $return;
