@@ -21,7 +21,7 @@
 					<?=$lang->group_id?>: <?=$item['group_id']?><br /><? endif; ?>
 				</span>
 				<p class="p"><img src="<?=Icon::get_url($item['name'], 'large', $item['type'], true)?>" alt="" /></p>
-				<p class="n"><?=Path::wordbreak($item['name'], $config->tpl_wordbreak, "\n", 1)?></p>
+				<p class="n"><?=Path::breakFilename($item['name'], $config->tpl_file_maxlength, $config->tpl_wordbreak)?></p>
 				<p class="i"><?=$info?></p>
 			</a>
 		</li><? $n++; endforeach; ?>

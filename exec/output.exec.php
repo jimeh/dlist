@@ -86,21 +86,25 @@ class Path {
 			return $r_files;
 		}
 	}
-	
-	//>Section> path_wordwrap
-	function wordbreak ($input, $length, $break=" ") {
-		if (preg_match("/(.*)\.(.*)/", $input, $preg) ) {
-			$words = explode(' ', $preg[1]);
-			$ext = '.'.$preg[2];
-		} else {
-			$words = explode(' ', $input);
-			$ext = '';
+	//>Section> path_breakFilename
+	function breakFilename ($input, $maxlength, $wordbreak = 16) {
+		
+		if ( $wordbreak != false ) {
+			if (preg_match("/(.*)\.(.*)/", $input, $preg) ) {
+				$words = explode(' ', $preg[1]);
+				$ext = '.'.$preg[2];
+			} else {
+				$words = explode(' ', $input);
+				$ext = '';
+			}
+			foreach( $words as $key => $value ) {
+				$words[$key] = wordwrap($value, $wordbreak, ' ', 1);
+			}
+			$input =  implode(' ', $words).$ext;
 		}
 		
-		foreach( $words as $key => $value ) {
-			$words[$key] = wordwrap($value, $length, $break, 1);
-		}
-		return implode(' ', $words).$ext;
+		if ( strlen($input) > $maxlength ) return rtrim(substr($input, 0, $maxlength)).'...';
+		return $input;
 	}
 	
 	//>Section> path_class.end

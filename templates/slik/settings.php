@@ -8,7 +8,9 @@
 		// Icons view settings
 		'file_info' => 'size',
 		'folder_info' => 'mtime',
-		'wordbreak' => 18,
+		'file_maxlength' => 32,
+		'wordbreak' => 16,
+		
 		
 		'preview_width' => 175,
 		'preview_height' => 175,
