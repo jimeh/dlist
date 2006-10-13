@@ -1,0 +1,29 @@
+<div id="headbar"></div>
+<div>
+	<ul>
+		<li>
+			<a href="../">
+				<p class="p"><img src="<?=Icon::get_parent('large')?>" alt="" /></p>
+				<p class="n">..</p>
+				<p class="i"><?=$lang->parent_dir?></p>
+			</a>
+		</li><? $n = 1; foreach ($dlist->list as $key => $item): $info = ($item['type'] == 'file') ? $item[$config->tpl_file_info] : $item[$config->tpl_folder_info] ; $thumbnail = (Icon::is_image($item['ext']) && $config->thumbnails) ? ", '".Icon::get_thumbnail_url($item['name'], $config->tpl_preview_width, $config->tpl_preview_height)."'" : '' ; ?>
+		<li>
+			<a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>" onmouseover="iP(<?=$n.$thumbnail?>)" onmouseout="o()">
+				<span id="p<?=$n?>"><? if (!empty($fields['owner'])): ?>
+					<?=$lang->owner?>: <?=$item['owner']?><br /><? endif; if (!empty($fields['group'])): ?>
+					<?=$lang->group?>: <?=$item['group']?><br /><? endif; if (!empty($fields['perms'])): ?>
+					<?=$lang->perms?>: <?=$item['perms']?><br /><? endif; if (!empty($fields['chmod'])): ?>
+					<?=$lang->chmod?>: <?=$item['chmod']?><br /><? endif; if (!empty($fields['mtime']) && $item['type'] == 'file'): ?>
+					<?=$lang->mtime?>: <?=$item['mtime']?><br /><? endif; if (!empty($fields['atime'])): ?>
+					<?=$lang->atime?>: <?=$item['atime']?><br /><? endif; if (!empty($fields['owner_id'])): ?>
+					<?=$lang->owner_id?>: <?=$item['owner_id']?><br /><? endif; if (!empty($fields['group_id'])): ?>
+					<?=$lang->group_id?>: <?=$item['group_id']?><br /><? endif; ?>
+				</span>
+				<p class="p"><img src="<?=Icon::get_url($item['name'], 'large', $item['type'], true)?>" alt="" /></p>
+				<p class="n"><?=Path::wordbreak($item['name'], $config->tpl_wordbreak, "\n", 1)?></p>
+				<p class="i"><?=$info?></p>
+			</a>
+		</li><? $n++; endforeach; ?>
+	</ul>
+</div>

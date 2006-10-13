@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title><?=$lang->index_of.' '.DIR_URL?></title>
+	<link rel="stylesheet" href="<?=TPL_URL?>stylesheets/css.php?src=screen.css&dir=<?=TPL_URL?>" type="text/css" media="screen" title="screen" charset="utf-8" />
+	
+	<script src="<?=TPL_URL?>javascripts/prototype.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+	<script src="<?=TPL_URL?>javascripts/scriptaculous/scriptaculous.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+	<script src="<?=TPL_URL?>javascripts/cookies.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+	<script src="<?=TPL_URL?>javascripts/main.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+	<!-- 
+	<script src="<?=TPL_URL?>javascripts/views.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+	 -->
+	<script type="text/javascript">
+	<!--
+		function set_lang (lang) {
+			if (lang != readCookie('<?=$config->lang_cookie?>')) {
+				createCookie('dList_language', lang, 365);
+				document.location.href = '';
+			}
+		}
+	
+		// OverLib configuration
+		var ol_width    = "";
+		var ol_delay    = 0;
+		var ol_fgclass  = "pop-fg";
+		var ol_bgclass  = "pop-bg";
+		var ol_textfontclass    = "pop-text";
+		var ol_captionfontclass = "pop-caption";
+		var ol_closefontclass   = "pop-closetext";
+	-->
+	</script>
+	<script type="text/javascript" src="<?=TPL_URL?>javascripts/overlib.js"><!-- overLIB (c) Erik Bosrup --></script>
+</head>
+<body onload="">
+
+<table id="main" border="0" cellspacing="0" cellpadding="0">
+	
+	<!-- START: HEAD -->
+	<tr id="head">
+		<td>
+			<div class="left"></div>
+			<div class="right"></div>
+			<div class="serverinfo"><?=SERVER_INFO?></div>
+			<div class="path">
+				<div class="shadow"><?=$lang->index_of.' '.DIR_URL?></div>
+				<div class="text"><?=$lang->index_of.' '.Path::url2links(DIR_URL)?></div>
+			</div>
+			<div id="navselect">
+				<a class="icons" onclick="showIcons();" title="<?=$lang->icons?>"><img src="<?=TPL_URL?>images/view-icons.gif" id="view-icons" alt="" /></a><img src="<?=TPL_URL?>images/view-sep.gif" alt="" /><a class="details" onclick="showDetails();" title="<?=$lang->details?>"><img src="<?=TPL_URL?>images/view-details.gif" id="view-details" alt="" /></a>
+			</div>
+			<a id="options-switch" onclick="new Effect.toggle('optbox', 'slide'); return false;"><img src="<?=TPL_URL?>images/gear.jpg" id="optimg" alt="" title="Show/Hide Options" /></a>
+			<div class="listcount">
+				<div class="shadow"><?=Path::stats($dlist->stats_files, $dlist->stats_folders, $dlist->stats_totalsize)?></div>
+				<div class="text"><?=Path::stats($dlist->stats_files, $dlist->stats_folders, $dlist->stats_totalsize)?></div>
+			</div>
+		</td>
+	</tr>
+	<!-- END: HEAD -->
+	
+	<!-- START: CONTENT BODY -->
+	<tr>
+		<td>
+			<table border="0" cellspacing="0" cellpadding="0" id="content">
+				<tr>
+					<td class="left"></td>
+					<td class="body">
+						
+						<!-- START: OPTIONS -->
+						<div id="optbox" style="display: none;">
+							<div id="options">
+								<form name="form-options" id="form-options">
+									<p>
+									<span class="title"><?=$lang->opt_language?>:</span>
+									<select name="language" id="language" onChange="set_lang(this.value);"><? foreach ($installed_languages as $key => $value): ?>
+										<option value="<?=$key?>"<? if ($key == $language):?> selected="selected"<? endif; ?>><?=ucfirst($value)?></option><? endforeach; unset($key); ?>
+									</select>
+									&nbsp;&nbsp;&nbsp;
+									<span class="title"><?=$lang->opt_sort_by?>:</span>
+									<select name="sort" id="sort"><? foreach ($fields as $key => $value): ?>
+										<option value="<?=$key?>"<? if ($key == $dlist->sort_by): ?> selected="selected"<? endif; ?>><?=$lang->$key?></options><? endforeach; ?>
+									</select>
+									<select name="order" id="order">
+										<option value="" selected="selected"><?=$lang->opt_ascending?></option>
+										<option value="desc"<? if ($dlist->reverse): ?> selected="selected"<? endif; ?>><?=$lang->opt_descending?></option>
+									</select>
+									<input type="button" value="<?=$lang->opt_sort?>" onClick="alert($('sort').value + ' ' + $('order').value);" />
+									</p>
+								</form>
+							</div>
+						</div>
+						<!-- END: OPTIONS -->
+						
+						<div id="loading" style="display: none;">
+							<div id="headbar"></div>
+							<div id="loadingbox">
+								<img src="<?=TPL_URL?>images/spinner.gif" alt="" />
+								<div id="loadingtext">Loading...</div>
+							</div>
+						</div>
+						
+						<div id="icons-view" style="display: ;"><? if ($include_icons) include($config->tpl_icons_file); ?></div>
+						<div id="details-view" style="display: none;"><? if ($include_details) include($config->tpl_details_file); ?></div>
+						
+						<img src="<?=TPL_URL?>images/spacer.gif" width="100%" height="1" alt="Spacer" />
+						
+					</td>
+					<td class="right"></td>
+				</tr>
+			</table>
+			
+		</td>
+	</tr>
+	<!-- END: CONTENT BODY -->
+	
+	<!-- START: FOOT -->
+	<tr id="foot">
+		<td>
+			<div class="left"></div>
+			<div class="right"></div>
+			<div class="copyright"><?=$lang->powered_by?>. <?=$timer->end()?>.</div>
+		</td>
+	</tr>
+	<!-- END: FOOT -->
+</table>
+
+
+</body>
+</html>

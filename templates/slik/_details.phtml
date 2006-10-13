@@ -1,0 +1,26 @@
+<table cellpadding="0" cellspacing="0" border="0" id="details-table">
+	<tr class="head">
+		<td class="icon"><div class="height">&nbsp;</div></td>
+		<? $count = count($fields); $n = 1; foreach ($fields as $key => $value):
+		$reverse = ($key == 'mtime') ? true : false;
+		 ?><td class="<?=$key?><? if ($key == $dlist->sort_by): ?> sorted-<? if ($dlist->reverse): ?>d<? else: ?>a<? endif; endif; if ($n == $count) echo ' last'; ?>"><div onclick="goToURL('<?=Sort::get_url($key, $reverse)?>');"><?=$lang->$key?></div></td><? $n++; endforeach ?>
+	</tr>
+	<tr class="i1" onmouseover="dH(this)" onmouseout="dO(this,'i1')">
+		<td class="i"><a href="../"><img src="<?=Icon::get_parent('small')?>" alt="icon" title="<?=$lang->parent_dir?>" /></a></td>
+		<td class="n"><a href="../" title="<?=$lang->parent_dir?>">..</a></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td class="l">&nbsp;</td>
+	</tr><? $n = 1; $i = 2; foreach ($dlist->list as $key => $item): $thumbnail = (Icon::is_image($item['ext']) && $config->thumbnails) ? ", '".Icon::get_thumbnail_url($item['name'], $config->tpl_preview_width, $config->tpl_preview_height)."'" : '' ; ?>
+	<tr class="i<?=$i?>" onmouseover="dH(this)" onmouseout="dO(this,'i<?=$i?>')">
+	<td class="i"><a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>"><img src="<?=Icon::get_url($item['name'], 'small', $item['type'])?>" alt="" title="<?=$item['name']?>" /></a></td>
+		<? $count = count($fields); $l = 1; foreach ($fields as $field => $value): $last = ($l == $count) ? ' class="l"' : ''; ?>
+		<? if ($field == 'name'): ?>
+		<td class="n"<? if (!empty($thumbnail)): ?> onmouseover="dP(<?=$n.$thumbnail?>)" onmouseout="o()"<? endif; ?>><a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>"><?=$item['name']?></a><? if (!empty($thumbnail)): ?><p id="d<?=$n?>"></p><? endif; ?></td>
+		<? else: ?>
+		<td><?=$item[$field]?></td>
+		<? endif; ?>
+		<? $l++; endforeach; ?>
+	</tr><? $n++; $i = ($i == 1) ? 2 : 1; endforeach; ?>
+</table>
