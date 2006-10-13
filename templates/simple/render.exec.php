@@ -46,6 +46,15 @@ $config->parse(TPL_PATH.'settings.php', true, 'tpl_');
 //>STAGE> render
 //==========================
 
+//>Section> set_view_mode_from_url
+if ( !empty($_REQUEST['view']) ) {
+	if ( preg_match("/icon|icons|1/i", $_REQUEST['view']) ) {
+		$_COOKIE['dList_simple_viewMode'] = 'icons';
+	} elseif ( preg_match("/detail|details|2/i", $_REQUEST['view']) ) {
+		$_COOKIE['dList_simple_viewMode'] = 'details';
+	}
+}
+
 //>Section> set_view_mode
 if ( !empty($_COOKIE['dList_simple_viewMode']) && !empty($config->tpl_modes[$_COOKIE['dList_simple_viewMode']]) ) {
 	$config->tpl_mode = $config->tpl_modes[$_COOKIE['dList_simple_viewMode']];
