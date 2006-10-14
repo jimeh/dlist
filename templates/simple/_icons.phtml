@@ -10,7 +10,7 @@
 <li><a href="../"><p class="icon"><img src="<?=Icon::get_parent('large')?>" alt="" /></p><p class="name">..</p><p class="info"><?=$lang->parent_dir?></p></a></li>
 	<? endif ?>
 	<? foreach ($dlist->list as $key => $item): $info = ($item['type'] == 'file') ? $item['size'] : $item['mtime'] ;?>
-<li><a href="<?=urlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>" title="<?=$item['name']?>"><p class="icon"><img src="<?=Icon::get_url($item['name'], 'large', $item['type'], true)?>" alt="" /></p><p class="name"><?=Path::breakFilename($item['name'], $config->tpl_file_maxlength, $config->tpl_wordbreak)?></p><p class="info"><?=$info?></p></a></li>
+<li><a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>" title="<?=$item['name']?>"><p class="icon"><img src="<?=Icon::get_url($item['name'], 'large', $item['type'], true)?>" alt="" /></p><p class="name"><?=Path::breakFilename($item['name'], $config->tpl_file_maxlength, $config->tpl_wordbreak)?></p><p class="info"><?=$info?></p></a></li>
 	<? endforeach ?>
 </ul>	
 </td></tr></table>
