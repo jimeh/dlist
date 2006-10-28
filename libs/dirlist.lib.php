@@ -153,9 +153,9 @@ class dirList {
 				( $this->reverse ) ? krsort($this->list) : ksort($this->list) ;
 			}
 			$this->stats_totalsize = $this->format_filesize($this->stats_totalsize_raw);
+			closedir($dh);
 			return true;
 		}else{ $this->error = true; return false; }
-		closedir($dh);
 	}
 	
 	
