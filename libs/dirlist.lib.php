@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.1.2 beta
+	Class: dirList v2.2 beta
 	
 	Copyright © 2006 Jim Myhrberg.
 	zynode@gmail.com
@@ -216,6 +216,7 @@ class dirList {
 		if ( is_file($item) ) {
 			$return['type'] = 'file';
 			$return['size_raw'] = filesize($item);
+			if ( $return['size_raw'] < 0 ) $return['size_raw'] = $this->get_large_filesize($item);
 			$return['size'] = $this->format_filesize($return['size_raw']);
 		} elseif ( is_dir($item) ) {
 			$return['type'] = 'dir';
@@ -223,6 +224,32 @@ class dirList {
 			$return['size'] = '-';
 		}
 		return $return;
+	}
+
+	function get_large_filesize ($file) {
+		$system = $this->system_info();
+		if ( $system == 'unix' ) {
+			exec('ls -l "'.str_replace('"', '\"', $file).'"', $details, $result);
+			if ( $result == 0 ) {
+				foreach( $details as $key => $value ) {
+					preg_match('/.*?([0-9]{10,32}).*/i', $value, $size);
+					return (!empty($size[1])) ? $size[1] : 'LARGE' ;
+				}
+			} else {
+				return 'LARGE';
+			}
+		} else {
+			return 'LARGE';
+		}
+	}
+	
+	function system_info () {
+		if ( stripos('windows', $_SERVER['SERVER_SOFTWARE']) ) {
+			return 'windows';
+		} else {
+			return 'unix';
+		}
+		
 	}
 
 	function getOwner ($item) {
@@ -242,13 +269,17 @@ class dirList {
 	}
 
 	function format_filesize($bytes) {
-		$types = array('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
-		for($n = 0; $bytes >= 1024; $n++) $bytes = $bytes / 1024;
-		$bytes = number_format($bytes, 2);
-		if ( preg_match("/^([0-9]+)(\.|,)([0-9]+0)$/", $bytes, $split) ) {
-			$bytes = ( ($split[3] = rtrim($split[3], '0')) == '' ) ? $split[1] : $split[1].$split[2].$split[3] ;
+		if ( $bytes !== 'LARGE' ) {
+			$types = array('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+			for($n = 0; $bytes >= 1024; $n++) $bytes = $bytes / 1024;
+			$bytes = number_format($bytes, 2);
+			if ( preg_match("/^([0-9]+)(\.|,)([0-9]+0)$/", $bytes, $split) ) {
+				$bytes = ( ($split[3] = rtrim($split[3], '0')) == '' ) ? $split[1] : $split[1].$split[2].$split[3] ;
+			}
+			return $bytes.' '.$types[$n];
+		} else {
+			return '>2 GB';
 		}
-		return $bytes.' '.$types[$n];
 	}
 
 	function smartDate ($timestamp, $datef='%B %d, %Y', $timef='%H:%M', $mainf='{date}, {time}') {

@@ -12,12 +12,13 @@
 			<a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>" onmouseover="iP(<?=$n.$thumbnail?>)" onmouseout="o()">
 				<span id="p<?=$n?>"><div class="name"><?=$item['name']?></div>
 <?
-	if ( !empty($fields['owner']) ) echo $lang->owner.': '.$item['owner'].'<br />';
-	if ( !empty($fields['group']) ) echo $lang->group.': '.$item['group'].'<br />';
-	if ( !empty($fields['perms']) ) echo $lang->perms.': '.$item['perms'].'<br />';
-	if ( !empty($fields['chmod']) ) echo $lang->chmod.': '.$item['chmod'].'<br />';
+	if ( !empty($fields['size']) && $item['type'] == 'file' ) echo $lang->size.': '.$item['size'].' ('.number_format($item['size_raw']).' bytes)<br />';
 	if ( !empty($fields['mtime']) && $item['type'] == 'file' ) echo $lang->mtime.': '.$item['mtime'].'<br />';
 	if ( !empty($fields['atime']) ) echo $lang->atime.': '.$item['atime'].'<br />';
+	if ( !empty($fields['perms']) ) echo $lang->perms.': '.$item['perms'].'<br />';
+	if ( !empty($fields['chmod']) ) echo $lang->chmod.': '.$item['chmod'].'<br />';
+	if ( !empty($fields['owner']) ) echo $lang->owner.': '.$item['owner'].'<br />';
+	if ( !empty($fields['group']) ) echo $lang->group.': '.$item['group'].'<br />';
 	if ( !empty($fields['owner_id']) ) echo $lang->owner_id.': '.$item['owner_id'].'<br />';
 	if ( !empty($fields['group_id']) ) echo $lang->group_id.': '.$item['group_id'].'<br />';
 ?>
