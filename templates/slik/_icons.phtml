@@ -12,7 +12,11 @@
 			<a href="<?=rawurlencode($item['name'])?><? if($item['type'] == 'dir') echo '/'; ?>" onmouseover="iP(<?=$n.$thumbnail?>)" onmouseout="o()">
 				<span id="p<?=$n?>"><div class="name"><?=$item['name']?></div>
 <?
-	if ( !empty($fields['size']) && $item['type'] == 'file' ) echo $lang->size.': '.$item['size'].' ('.number_format($item['size_raw']).' bytes)<br />';
+	if ( !empty($fields['size']) && $item['type'] == 'file' ) {
+		echo $lang->size.': '.$item['size'];
+		if (!preg_match('/bytes/i', $item['size'])) echo ' ('.number_format($item['size_raw']).' bytes)';
+		echo '<br />';
+	}
 	if ( !empty($fields['mtime']) && $item['type'] == 'file' ) echo $lang->mtime.': '.$item['mtime'].'<br />';
 	if ( !empty($fields['atime']) ) echo $lang->atime.': '.$item['atime'].'<br />';
 	if ( !empty($fields['perms']) ) echo $lang->perms.': '.$item['perms'].'<br />';
