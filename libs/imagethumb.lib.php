@@ -31,7 +31,7 @@ class imageThumb {
 // ----- [ Configuration ] ----------------------
 // ==============================================
 	
-	var $jpg_quality = 85;
+	var $jpg_quality = 85; // default jpg quality
 	
 	var $cache_dir = 'cache/images/';
 	var $cache_validity = 60; // days
@@ -60,12 +60,12 @@ class imageThumb {
 // ==============================================
 
 
-	function quick ($file, $width, $height, $quality=false) {
-		if ( !$this->check_cache($file, $width, $height) ) {
+	function quick ($file, $width, $height, $quality=null) {
+		if ( !$this->check_cache($file, $width, $height, $quality) ) {
 			$this->load($file);
 			if ( $this->error == false) {
-				$this->resize($width, $height);
 				if ( !empty($quality) ) $this->jpg_quality = $quality;
+				$this->resize($width, $height);
 				$this->output();
 				$this->save_to_cache();
 				$this->destroy();
@@ -76,8 +76,8 @@ class imageThumb {
 
 	function load ($file) {
 		if ( is_readable($file) && preg_match("/.*\.(jpg|jpeg|jpe|png)/i", $file, $type) ) {
-			$this->type = $type = $type[1];
-			$this->image = ( $type == 'png' ) ? imagecreatefrompng($file) : imagecreatefromjpeg($file) ;
+			$this->type = ( $type[1] == 'jpeg' || $type[1] == 'jpe' ) ? 'jpg' : $type[1] ;
+			$this->image = ( $this->type == 'png' ) ? imagecreatefrompng($file) : imagecreatefromjpeg($file) ;
 			$this->src_file = $file;
 			$this->last_modified = filemtime($file);
 		} else { $this->error = true; return false; }
@@ -99,8 +99,7 @@ class imageThumb {
 	}
 	
 	function output ($file=null) {
-		$type = ( empty($this->output_format) ) ? $this->type : $this->output_format ;
-		if ( $type == 'png' ) {
+		if ( $this->get_type() == 'png' ) {
 			header('Content-type: image/png');
 			header('Content-disposition: image; filename="'.basename($this->src_file).'"');
 			( empty($file) ) ? imagepng($this->image) : imagepng($this->image, $file) ;
@@ -121,7 +120,9 @@ class imageThumb {
 		if ( !preg_match("/\/$/", $this->cache_dir) ) $this->cache_dir .= '/';
 		if ( is_writable($this->cache_dir) ) {
 			$string = $this->src_file.$this->last_modified;
-			if ( !empty($this->target_w) && !empty($this->target_h)) $string .= $this->target_w.$this->target_h;
+			if ( !empty($this->target_w) ) $string .= $this->target_w;
+			if ( !empty($this->target_h) ) $string .= $this->target_h;
+			if ( $this->get_type() == 'jpg' ) $string .= $this->jpg_quality;
 			$filename = 'imgt_';
 			$filename .= md5($string);
 			$filename .= '.'.$this->type;
@@ -129,18 +130,20 @@ class imageThumb {
 				if ( $this->type == 'png' ) {
 					imagepng($this->image, $this->cache_dir.$filename);
 				} else {
-					imagejpeg($this->image, $this->cache_dir.$filename);
+					imagejpeg($this->image, $this->cache_dir.$filename, $this->jpg_quality);
 				}
 			}
 		}
 	}
 	
-	function check_cache ($file, $target_w=null, $target_h=null) {
+	function check_cache ($file, $target_w=null, $target_h=null, $quality=null) {
 		if ( is_readable($file) ) {
 			preg_match("/(?:.*\/|)(.*?)\.(.*)/i", $file, $file_pieces);
 			$ext = $file_pieces[2];
 			$string = $file.filemtime($file);
-			if ( !empty($target_w) && !empty($target_h) ) $string .= $target_w.$target_h;
+			if ( !empty($target_w) ) $string .= $target_w;
+			if ( !empty($target_h) ) $string .= $target_h;
+			if ( $ext == 'jpg' || $ext == 'jpeg' || $ext == 'jpe' ) $string .= $quality;
 			$filename = 'imgt_';
 			$filename .= md5($string);
 			$filename .= '.'.$ext;
@@ -180,6 +183,10 @@ class imageThumb {
 // ----- [ Internal Functions ] -----------------
 // ==============================================
 
+	
+	function get_type () {
+		return ( empty($this->output_format) ) ? $this->type : $this->output_format ;
+	}
 	
 	function rfile ($file){
 		if (!isset($file)) return false;

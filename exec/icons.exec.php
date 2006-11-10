@@ -57,7 +57,10 @@ class Icon {
 		$icons_url = ICONS_URL.$size.'/';
 		if ( $type == 'file' ) {
 			if ( preg_match($config->thumb_pattern, $ext) && $thumbnail && $config->thumbnails ) {
-				return DLIST_URL.'thumb.php?src='.rawurlencode(DIR_URL.$file).'&w='.$sizew.'&h='.$sizeh;
+				$thumb_url = (!preg_match('/^\//i', $config->thumb_url)) ? DLIST_URL.$config->thumb_url : $config->thumb_url ;
+				$thumb_url = str_replace('%width%', $sizew, $thumb_url);
+				$thumb_url = str_replace('%height%', $sizeh, $thumb_url);
+				return str_replace('%url%', DIR_URL.$file, $thumb_url);
 			} elseif ( file_exists($icons_path.$ext.$config->icons_ext) ) {
 				return $icons_url.$ext.$config->icons_ext;
 			} else {
@@ -74,7 +77,11 @@ class Icon {
 	
 //>Section> get_thumbnail
 	function get_thumbnail_url ($file, $sizew, $sizeh) {
-		return DLIST_URL.'thumb.php?src='.rawurlencode(DIR_URL.$file).'&w='.$sizew.'&h='.$sizeh;
+		global $config;
+		$thumb_url = (!preg_match('/^\//i', $config->thumb_url)) ? DLIST_URL.$config->thumb_url : $config->thumb_url ;
+		$thumb_url = str_replace('%width%', $sizew, $thumb_url);
+		$thumb_url = str_replace('%height%', $sizeh, $thumb_url);
+		return str_replace('%url%', DIR_URL.$file, $thumb_url);
 	}
 	
 //>Section> get_parent

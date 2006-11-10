@@ -52,6 +52,11 @@ $config = array(
 	'thumbnails' => true,
 	'thumb_pattern' => '/jpg|jpeg|jpe|png$/i',
 	
+	# thumbnail request url
+	'thumb_url' => '%width%x%height%%url%',
+	// 'thumb_url' => 'thumb.php?src=%url%&w=%width%&h=%height%',
+	
+	
 	# Smart Date shows relative time stamps ("Yesterday, 09:34") when applicable
 	'smartdate' => true,
 	
