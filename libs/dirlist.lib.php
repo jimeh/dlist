@@ -4,7 +4,7 @@ class dirList {
 
 /*
 
-	Class: dirList v2.2 beta
+	Class: dirList v2.2.1 beta
 	
 	Copyright © 2006 Jim Myhrberg.
 	zynode@gmail.com
@@ -227,29 +227,28 @@ class dirList {
 	}
 
 	function get_large_filesize ($file) {
-		$system = $this->system_info();
-		if ( $system == 'unix' ) {
+		if ( $this->system_info() == 'unix' ) {
 			exec('ls -l "'.str_replace('"', '\"', $file).'"', $details, $result);
-			if ( $result == 0 ) {
-				foreach( $details as $key => $value ) {
-					preg_match('/.*?([0-9]{10,32}).*/i', $value, $size);
-					return (!empty($size[1])) ? $size[1] : 'LARGE' ;
-				}
-			} else {
-				return 'LARGE';
-			}
 		} else {
-			return 'LARGE';
+			$file = str_replace('/', '\\', $file);
+			exec('dir /-C "'.str_replace('"', '\"', $file).'"', $details, $result);
 		}
+		if ( $result == 0 ) {
+			foreach( $details as $key => $value ) {
+				if ( preg_match('/.*?([0-9]{10,32}).*?'.preg_quote(basename($file), '/').'/i', $value, $size) ) {
+					return $size[1];
+				}
+			}
+		}
+		return 'LARGE';
 	}
 	
 	function system_info () {
-		if ( stripos('windows', $_SERVER['SERVER_SOFTWARE']) ) {
+		if ( preg_match('/windows|win32|win64/i', $_SERVER['SERVER_SOFTWARE']) ) {
 			return 'windows';
 		} else {
 			return 'unix';
 		}
-		
 	}
 
 	function getOwner ($item) {
