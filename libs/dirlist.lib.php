@@ -260,11 +260,16 @@ class dirList {
 	}
 
 	function getGroup ($item) {
-		if ( function_exists('posix_getgrgid') ) {
-			$id = filegroup($item);
-			$name = posix_getgrgid($id);
-			return array('groupid'=>$id, 'group'=>$name['name']);
-		} else { return false; }
+		// --------------------------------------------------
+		// -- Commented out till the posix_getgrdid() bug in PHP 5.2.1 which causes
+		// -- an out of memory error is fixed.
+		// --------------------------------------------------
+		// if ( function_exists('posix_getgrgid') ) {
+		// 	$id = filegroup($item);
+		// 	$name = posix_getgrgid($id);
+		// 	return array('groupid'=>$id, 'group'=>$name['name']);
+		// } else { return false; }
+		return false;
 	}
 
 	function format_filesize($bytes) {

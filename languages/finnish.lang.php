@@ -31,7 +31,7 @@ class lang {
 
 	// Language settings
 	var $_language = 'suomi'; // local language name ("svenska" for swedish)...
-	var $_version = '1.0.8';
+	var $_version = '1.0.9';
 
 
 	// Locale settings
@@ -50,14 +50,14 @@ class lang {
 	var $chmod    = 'CHMOD';
 	var $owner    = 'Omistaja';
 	var $group    = 'Ryhmä';
-	var $owner_id = 'Omistajan ID';
-	var $group_id = 'Ryhmän ID';
+	var $owner_id = 'Omistajan tunnus';
+	var $group_id = 'Ryhmän tunnus';
 	var $type     = 'Tyyppi';
 	var $ext      = 'Pääte';
 
 	var $icons    = 'Kuvakkeet';
 	var $details  = 'Lisätietoa';
-	var $preview  = 'Preview'; //TODO translate this
+	var $preview  = 'Esikatselu'; //TODO translate this
 
 	var $timer_string = 'Sivu on syljetty ulos %s:ssa sekunnissa';
 
@@ -65,16 +65,16 @@ class lang {
 	
 	
 	// Option titles
-	var $opt_language = 'Language'; //TODO translate
-	var $opt_sort_by  = 'Sort by'; //TODO translate
-	var $opt_ascending  = 'Ascending'; //TODO translate
-	var $opt_descending = 'Descending'; //TODO translate
-	var $opt_sort       = 'Sort'; //TODO translate
+	var $opt_language = 'Kieli'; //TODO translate
+	var $opt_sort_by  = 'Lajittelu'; //TODO translate
+	var $opt_ascending  = 'Nouseva'; //TODO translate
+	var $opt_descending = 'Laskeutuva'; //TODO translate
+	var $opt_sort       = 'Lajittele!'; //TODO translate
 
 
 	// Statistics
-	var $stats_folder    = '%n hakemistoa';
-	var $stats_folders   = '%n hakemistot';
+	var $stats_folder    = '%n hakemisto';
+	var $stats_folders   = '%n hakemistoa';
 	var $stats_file      = '%n tiedosto';
 	var $stats_files     = '%n tiedostoa';
 	var $stats_totalsize = '%s, %f';	// %s = size, %f = number of files
@@ -94,7 +94,7 @@ class lang {
 	var $sd_tomorrow   = 'Huomenna';
 	var $sd_today      = 'Tänään';
 	var $sd_yesterday  = 'Eilen';
-	var $sd_2_days_ago = 'Kaksi päivää sitten';
+	var $sd_2_days_ago = 'Toissapäivänä';
 	var $sd_3_days_ago = 'Kolme päivää sitten';
 	
 }
